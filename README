@@ -1,9 +1,0 @@
-OSTOSLISTA
---
-
-Esimerkkisovellus tietokantasovellus kurssille.
-
-Tietokannan käsittely
-Luonti: psql < sql/luontilauseet.sql
-Data: psql < sql/esimerkkidata.sql
-Poisto: psql < sql/poistolauseet.sql
