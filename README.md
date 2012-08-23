@@ -15,3 +15,9 @@ Esimerkkisovellus tietokantasovellus kurssille.
 ### Tietokantataulujen poisto:
 
     psql < sql/poistolauseet.sql
+
+## Sovelluskoodit
+
+Sovellus toteutetaan eri kielillä ja alustoilla. Kullekin toteutukselle tehdään oma haaransa, jotka näkyvät esimerkiksi sivulla: https://github.com/tsoha-syksy2012/ostoslista-esimerkki/branches
+
+Gitin päähaara eli master sisältää kaikille yhtenäiset osat, kuten sql-lauseet ja mockupit yms.
