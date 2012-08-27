@@ -36,7 +36,8 @@ class Ostoslista < Sinatra::Base
   get '/lista/:id' do
       lista = DB.fetch("SELECT * FROM lists WHERE user_id = ? AND id = ?", kirjautunut_kayttaja[:id], params[:id]).first
       if lista
-        erb :lista, locals: {otsikko: "Ostoslista - #{lista[:name]}", kayttaja: kirjautunut_kayttaja, lista: lista}
+        tuotteet = DB.fetch("SELECT * FROM items WHERE list_id = ?", lista[:id]).all
+        erb :lista, locals: {otsikko: "Ostoslista - #{lista[:name]}", kayttaja: kirjautunut_kayttaja, lista: lista, tuotteet: tuotteet}
       else
         halt(404)
       end

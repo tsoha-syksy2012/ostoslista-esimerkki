@@ -1,10 +1,14 @@
 <h2><%= lista[:name] %></h2>
 <p><a href="/muokkaalistaa/<%= lista[:id] %>">Muokkaa listaa</a></p>
-<ul>
-  <li>Maitoa <a href="poistalistalta.html?tuote=123">[poista]</a></li>
-  <li>Leipää <a href="poistalistalta.html?tuote=124">[poista]</a></li>
-  <li>Jauhoja <a href="poistalistalta.html?tuote=125">[poista]</a></li>
-</ul>
+<% unless tuotteet.empty? %>
+  <ul>
+  <% tuotteet.each do |tuote| %>
+    <li><%= tuote[:name] %> <a href="/poistalistalta/<%= lista[:id] %>/<%= tuote[:id] %>">[poista]</a></li>
+  <% end %>
+  </ul>
+<% else %>
+  <p>Ei tuotteita listalla</p>
+<% end %>
 <form action="lista/<%= lista[:id] %>" method="POST">
   <fieldset>
     <legend>Uusi tuote listaan</legend>
