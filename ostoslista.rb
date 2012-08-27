@@ -27,8 +27,17 @@ class Ostoslista < Sinatra::Base
       redirect '/kirjautuminen'
     else
       lista = DB.fetch("SELECT * FROM lists WHERE user_id = ? AND is_default = true", kirjautunut_kayttaja[:id]).first
-      erb :lista, locals: {otsikko: "Ostoslista - #{lista[:name]}", kayttaja: kirjautunut_kayttaja, lista: lista}
+      redirect "/lista/#{lista[:id]}"
     end
+  end
+
+  get '/lista/:id' do
+      lista = DB.fetch("SELECT * FROM lists WHERE user_id = ? AND id = ?", kirjautunut_kayttaja[:id], params[:id]).first
+      if lista
+        erb :lista, locals: {otsikko: "Ostoslista - #{lista[:name]}", kayttaja: kirjautunut_kayttaja, lista: lista}
+      else
+        halt(404)
+      end
   end
 
   get '/kirjautuminen' do
