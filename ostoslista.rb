@@ -22,13 +22,15 @@ class Ostoslista < Sinatra::Base
     end
   end
 
-  get '/' do
-    unless kirjautunut?
+  before do
+    unless kirjautunut? or request.path_info =~ /^\/kirjautuminen/
       redirect '/kirjautuminen'
-    else
-      lista = DB.fetch("SELECT * FROM lists WHERE user_id = ? AND is_default = true", kirjautunut_kayttaja[:id]).first
-      redirect "/lista/#{lista[:id]}"
     end
+  end
+
+  get '/' do
+    lista = DB.fetch("SELECT * FROM lists WHERE user_id = ? AND is_default = true", kirjautunut_kayttaja[:id]).first
+    redirect "/lista/#{lista[:id]}"
   end
 
   get '/lista/:id' do
@@ -52,6 +54,11 @@ class Ostoslista < Sinatra::Base
     else
       erb :kirjautumislomake, locals: {otsikko: 'Ostoslista - kirjautuminen', virhe: 'Kirjautuminen epäonnistui. Tarkista tunnus tai salasana!'}
     end
+  end
+
+  get '/ulos' do
+    session[:kayttaja] = nil
+    redirect '/kirjautuminen'
   end
 
   not_found do

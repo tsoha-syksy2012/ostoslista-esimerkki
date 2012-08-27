@@ -8,6 +8,9 @@
   <body>
     <img src="/images/logo.jpg" title="Ostoslista" alt="Ostoslistan logo" />
     <h1>Ostoslista</h1>
+    <% if kirjautunut? %>
+      <p><a href="ulos">Kirjaudu ulos</a></p>
+    <% end %>
     <%= yield %>
     <footer>
     <p>Samin esimerkkitsoha, lähdekoodi: <a href="https://github.com/tsoha-syksy2012/ostoslista-esimerkki/tree/ruby_sinatra_sequel">Githubissa</a></p>
