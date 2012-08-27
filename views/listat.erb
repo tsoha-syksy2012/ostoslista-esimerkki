@@ -1,0 +1,12 @@
+<h2>Kaikki ostoslistat</h2>
+<ul>
+<% listat.each do |lista| %>
+  <li>
+    <a href="/lista/<%= lista[:id] %>"><%= lista[:name] %></a>
+    <%= '(oletus)' if lista[:is_default] %>
+  </li>
+<% end %>
+</ul>
+<form action="lista.html" method="POST">
+  <p><input type="submit" value="Luo uusi lista" /></p>
+</form>

@@ -42,6 +42,11 @@ class Ostoslista < Sinatra::Base
       end
   end
 
+  get '/listat' do
+    listat = DB.fetch("SELECT * FROM lists WHERE user_id = ?", kirjautunut_kayttaja[:id]).all
+    erb :listat, locals: {otsikko: 'Ostoslista - Kaikki ostoslistat', listat: listat}
+  end
+
   get '/kirjautuminen' do
     erb :kirjautumislomake, locals: {otsikko: 'Ostoslista - kirjautuminen'}
   end
