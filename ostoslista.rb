@@ -40,7 +40,7 @@ class Ostoslista < Sinatra::Base
   get '/lista/:id' do
     lista = hae_lista kirjautunut_kayttaja[:id], params[:id]
     if lista
-      tuotteet = DB.fetch("SELECT * FROM items WHERE list_id = ?", lista[:id]).all
+      tuotteet = DB.fetch("SELECT * FROM items WHERE list_id = ? ORDER BY name", lista[:id]).all
       erb :lista, locals: {otsikko: "Ostoslista - #{lista[:name]}", kayttaja: kirjautunut_kayttaja, lista: lista, tuotteet: tuotteet}
     else
       halt(404)
