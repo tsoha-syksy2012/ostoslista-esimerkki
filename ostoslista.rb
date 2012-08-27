@@ -77,7 +77,7 @@ class Ostoslista < Sinatra::Base
   post '/muokkaalistaa/:lista' do
     DB[:lists].where(id: params[:lista]).update(name: params[:nimi])
     if params[:oletus] == 'on'
-      DB[:lists].update(is_default: false)
+      DB[:lists].where(user_id: kirjautunut_kayttaja[:id]).update(is_default: false)
       DB[:lists].where(id: params[:lista]).update(is_default: true)
     end
     redirect "/lista/#{params[:lista]}"
