@@ -53,6 +53,13 @@ class Ostoslista < Sinatra::Base
     redirect "/lista/#{id}"
   end
 
+  get '/poistalistalta/:tuote' do
+    tuote = DB[:items].where(id: params[:tuote])
+    lista_id = tuote.first[:list_id]
+    tuote.delete
+    redirect "/lista/#{lista_id}"
+  end
+
   get '/kirjautuminen' do
     erb :kirjautumislomake, locals: {otsikko: 'Ostoslista - kirjautuminen'}
   end

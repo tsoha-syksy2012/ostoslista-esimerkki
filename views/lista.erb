@@ -3,7 +3,7 @@
 <% unless tuotteet.empty? %>
   <ul>
   <% tuotteet.each do |tuote| %>
-    <li><%= tuote[:name] %> <a href="/poistalistalta/<%= lista[:id] %>/<%= tuote[:id] %>">[poista]</a></li>
+    <li><%= tuote[:name] %> <a href="/poistalistalta/<%= tuote[:id] %>">[poista]</a></li>
   <% end %>
   </ul>
 <% else %>
