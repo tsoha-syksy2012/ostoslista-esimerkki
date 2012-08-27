@@ -1,5 +1,6 @@
 <h2>Kirjautuminen</h2>
 <p>Ole hyvä ja kirjaudu sisään ennenkuin voit käyttää sovellusta.</p>
+<%= "<p class='virhe'>#{virhe}</p>" if defined? virhe %>
 <form action="/kirjautuminen" method="POST">
   <fieldset>
     <legend>Kirjaudu sisään</legend>
