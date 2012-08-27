@@ -9,7 +9,7 @@
 <% else %>
   <p>Ei tuotteita listalla</p>
 <% end %>
-<form action="lista/<%= lista[:id] %>" method="POST">
+<form action="/lisaalistalle/<%= lista[:id] %>" method="POST">
   <fieldset>
     <legend>Uusi tuote listaan</legend>
     <label for="tuote">Tuotteen nimi:</label>

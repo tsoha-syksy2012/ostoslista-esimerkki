@@ -60,6 +60,11 @@ class Ostoslista < Sinatra::Base
     redirect "/lista/#{lista_id}"
   end
 
+  post '/lisaalistalle/:lista' do
+    DB[:items].insert(list_id: params[:lista], name: params[:tuote])
+    redirect "/lista/#{params[:lista]}"
+  end
+
   get '/kirjautuminen' do
     erb :kirjautumislomake, locals: {otsikko: 'Ostoslista - kirjautuminen'}
   end
