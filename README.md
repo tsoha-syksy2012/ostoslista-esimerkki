@@ -27,3 +27,9 @@ Gitin päähaara eli master sisältää kaikille yhtenäiset osat, kuten sql-lau
 Aseta .env-tiedoston muuttujat kohdilleen.
 
 Aja `foreman start` ja mene selaimessa osoitteeseen http://localhost:portti (oletuksena portti on 4567).
+
+## Esimerkkisovellus
+
+Löytyy osoitteesta: http://ostoslista-esimerkki-ruby.herokuapp.com/
+
+SQL-lauseista löytyvät tunnukset toimivat.
