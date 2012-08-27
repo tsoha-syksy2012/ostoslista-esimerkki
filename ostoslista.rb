@@ -47,6 +47,11 @@ class Ostoslista < Sinatra::Base
     erb :listat, locals: {otsikko: 'Ostoslista - Kaikki ostoslistat', listat: listat}
   end
 
+  post '/uusilista' do
+    id = DB[:lists].insert(user_id: kirjautunut_kayttaja[:id], name: "Ostoslista (#{Date.today})")
+    redirect "/lista/#{id}"
+  end
+
   get '/kirjautuminen' do
     erb :kirjautumislomake, locals: {otsikko: 'Ostoslista - kirjautuminen'}
   end
