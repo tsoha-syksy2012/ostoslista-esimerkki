@@ -28,19 +28,23 @@ class Ostoslista < Sinatra::Base
     end
   end
 
+  def hae_lista(kayttaja, lista)
+    DB.fetch("SELECT * FROM lists WHERE user_id = ? AND id = ?", kayttaja, lista).first
+  end
+
   get '/' do
     lista = DB.fetch("SELECT * FROM lists WHERE user_id = ? AND is_default = true", kirjautunut_kayttaja[:id]).first
     redirect "/lista/#{lista[:id]}"
   end
 
   get '/lista/:id' do
-      lista = DB.fetch("SELECT * FROM lists WHERE user_id = ? AND id = ?", kirjautunut_kayttaja[:id], params[:id]).first
-      if lista
-        tuotteet = DB.fetch("SELECT * FROM items WHERE list_id = ?", lista[:id]).all
-        erb :lista, locals: {otsikko: "Ostoslista - #{lista[:name]}", kayttaja: kirjautunut_kayttaja, lista: lista, tuotteet: tuotteet}
-      else
-        halt(404)
-      end
+    lista = hae_lista kirjautunut_kayttaja[:id], params[:id]
+    if lista
+      tuotteet = DB.fetch("SELECT * FROM items WHERE list_id = ?", lista[:id]).all
+      erb :lista, locals: {otsikko: "Ostoslista - #{lista[:name]}", kayttaja: kirjautunut_kayttaja, lista: lista, tuotteet: tuotteet}
+    else
+      halt(404)
+    end
   end
 
   get '/listat' do
@@ -62,6 +66,16 @@ class Ostoslista < Sinatra::Base
 
   post '/lisaalistalle/:lista' do
     DB[:items].insert(list_id: params[:lista], name: params[:tuote])
+    redirect "/lista/#{params[:lista]}"
+  end
+
+  get '/muokkaalistaa/:lista' do
+    lista = hae_lista kirjautunut_kayttaja[:id], params[:lista]
+    erb :muokkauslomake, locals: {otsikko: "Ostoslista - #{lista[:name]} - muokkaus", lista: lista}
+  end
+
+  post '/muokkaalistaa/:lista' do
+    DB[:lists].where(id: params[:lista]).update(name: params[:nimi])
     redirect "/lista/#{params[:lista]}"
   end
 
