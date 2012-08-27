@@ -45,4 +45,8 @@ class Ostoslista < Sinatra::Base
     end
   end
 
+  not_found do
+    erb :virhe404, locals: {otsikko: 'Sivua ei löydy'}
+  end
+
 end
