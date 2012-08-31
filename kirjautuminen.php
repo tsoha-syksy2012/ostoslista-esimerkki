@@ -4,7 +4,7 @@ require 'avusteet/yla.php';
 ?>
 <h2>Kirjautuminen</h2>
 <p>Ole hyvä ja kirjaudu sisään ennenkuin voit käyttää sovellusta.</p>
-<form action="lista.html" method="POST">
+<form action="kirjaudu.php?sisaan" method="POST">
   <fieldset>
     <legend>Kirjaudu sisään</legend>
     <label for="tunnus">Käyttäjätunnus:</label>
