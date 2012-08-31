@@ -8,12 +8,12 @@ class Kyselyt {
     $this->_pdo = $pdo;
   }
 
-  public function kirjaudu($tunnus, $salasana) {
+  public function tunnista($tunnus, $salasana) {
     $kysely = $this->valmistele('SELECT id FROM users WHERE username = ? AND password = ?');
-    if ($kysely->execute(array($tunnus, $salasana)) && $id = $kysely->fetchObject()->id !== null) {
-      die('success');
+    if ($kysely->execute(array($tunnus, $salasana))) {
+      return $kysely->fetchObject();
     } else {
-      die('failure');
+      return null;
     }
   }
 
