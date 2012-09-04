@@ -47,6 +47,18 @@ class Kyselyt {
     return null;
   }
 
+  public function hae_listat($kayttaja_id) {
+    $kysely = $this->valmistele('SELECT * FROM lists WHERE user_id = ? ORDER BY name');
+    if ($kysely->execute(array($kayttaja_id))) {
+      $listat = array();
+      while($lista = $kysely->fetchObject()) {
+        $listat[] = $lista;
+      }
+      return $listat;
+    }
+    return null;
+  }
+
   private function valmistele($sqllause) {
     return $this->_pdo->prepare($sqllause);
   }
