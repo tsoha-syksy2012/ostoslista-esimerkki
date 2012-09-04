@@ -59,6 +59,14 @@ class Kyselyt {
     return null;
   }
 
+  public function poista_listalta($tuote_id) {
+    $kysely = $this->valmistele('DELETE FROM items WHERE id = ? RETURNING list_id');
+    if ($kysely->execute(array($tuote_id))) {
+      return $kysely->fetchObject()->list_id;
+    }
+    return null;
+  }
+
   private function valmistele($sqllause) {
     return $this->_pdo->prepare($sqllause);
   }
