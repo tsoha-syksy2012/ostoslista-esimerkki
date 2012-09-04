@@ -35,6 +35,18 @@ class Kyselyt {
     }
   }
 
+  public function listan_tuotteet($lista_id) {
+    $kysely = $this->valmistele('SELECT * FROM items WHERE list_id = ?');
+    if ($kysely->execute(array($lista_id))) {
+      $alkiot = array();
+      while($alkio = $kysely->fetchObject()) {
+        $alkiot[] = $alkio;
+      }
+      return $alkiot;
+    }
+    return null;
+  }
+
   private function valmistele($sqllause) {
     return $this->_pdo->prepare($sqllause);
   }
