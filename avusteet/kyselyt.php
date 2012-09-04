@@ -67,6 +67,11 @@ class Kyselyt {
     return null;
   }
 
+  public function lisaa_tuote($lista_id, $tuotteen_nimi) {
+    $kysely = $this->valmistele('INSERT INTO items (list_id, name) VALUES (?, ?)');
+    return $kysely->execute(array($lista_id, $tuotteen_nimi));
+  }
+
   private function valmistele($sqllause) {
     return $this->_pdo->prepare($sqllause);
   }
