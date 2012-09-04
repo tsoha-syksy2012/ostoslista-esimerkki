@@ -11,7 +11,14 @@ class Sessio {
   }
 
   public function __get($avain) {
-    return $_SESSION[$avain];
+    if ($this->__isset($avain)) {
+      return $_SESSION[$avain];
+    }
+    return null;
+  }
+
+  public function __isset($avain) {
+    return isset($_SESSION[$avain]);
   }
 
 }

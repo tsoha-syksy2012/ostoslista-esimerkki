@@ -17,6 +17,15 @@ class Kyselyt {
     }
   }
 
+  public function oletus_lista($kayttaja_id) {
+    $kysely = $this->valmistele('SELECT * FROM lists WHERE user_id = ? AND is_default IS TRUE');
+    if ($kysely->execute(array($kayttaja_id))) {
+      return $kysely->fetchObject();
+    } else {
+      return null;
+    }
+  }
+
   private function valmistele($sqllause) {
     return $this->_pdo->prepare($sqllause);
   }
