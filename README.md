@@ -21,3 +21,9 @@ Esimerkkisovellus tietokantasovellus kurssille.
 Sovellus toteutetaan eri kielillä ja alustoilla. Kullekin toteutukselle tehdään oma haaransa, jotka näkyvät esimerkiksi sivulla: https://github.com/tsoha-syksy2012/ostoslista-esimerkki/branches
 
 Gitin päähaara eli master sisältää kaikille yhtenäiset osat, kuten sql-lauseet ja mockupit yms.
+
+## Esimerkkisovellus
+
+Löytyy osoitteesta: http://saada.users.cs.helsinki.fi/ostoslista-esimerkki-php/
+
+SQL-lauseista löytyvät tunnukset toimivat.
