@@ -80,7 +80,7 @@ class Kyselyt {
   public function paivita_lista($kayttaja_id, $lista_id, $nimi, $oletus) {
     $kysely = $this->valmistele('UPDATE lists SET name = ? WHERE user_id = ? AND id = ?');
     $kysely->execute(array($nimi, $kayttaja_id, $lista_id));
-    if ($ole<tus) {
+    if ($oletus) {
       $this->paivita_kayttajan_oletus($kayttaja_id, $lista_id);
     }
     return $this->hae_lista($kayttaja_id, $lista_id);
