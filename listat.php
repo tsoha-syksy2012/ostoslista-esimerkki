@@ -1,6 +1,8 @@
 <?php
 require_once 'avusteet.php';
 
+varmista_kirjautuminen();
+
 $ostoslistat = $kyselija->hae_listat($sessio->kayttaja_id);
 
 $otsikko = 'Ostoslista - Kaikki ostoslistat';

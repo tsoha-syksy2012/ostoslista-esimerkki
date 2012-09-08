@@ -1,6 +1,8 @@
 <?php
 require_once 'avusteet.php';
 
+varmista_kirjautuminen();
+
 $ostoslista = $kyselija->hae_lista($sessio->kayttaja_id, $_GET['lista']);
 
 if (!$ostoslista) {
