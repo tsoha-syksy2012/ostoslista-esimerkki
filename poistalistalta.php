@@ -3,6 +3,10 @@ require_once 'avusteet.php';
 
 varmista_kirjautuminen();
 
-$lista_id = $kyselija->poista_listalta($_GET['tuote']);
+$lista_id = $kyselija->poista_listalta($sessio->kayttaja_id, $_GET['tuote']);
 
-ohjaa("lista.php?lista=$lista_id");
+if ($lista_id) {
+  ohjaa("lista.php?lista=$lista_id");
+} else {
+  ohjaa('index.php');
+}

@@ -59,17 +59,22 @@ class Kyselyt {
     return null;
   }
 
-  public function poista_listalta($tuote_id) {
-    $kysely = $this->valmistele('DELETE FROM items WHERE id = ? RETURNING list_id');
-    if ($kysely->execute(array($tuote_id))) {
-      return $kysely->fetchObject()->list_id;
+  public function poista_listalta($kayttaja_id, $tuote_id) {
+    if ($this->onko_tuote_kayttajan($kayttaja_id, $tuote_id)) {
+      $kysely = $this->valmistele('DELETE FROM items WHERE id = ? RETURNING list_id');
+      if ($kysely->execute(array($tuote_id))) {
+        return $kysely->fetchObject()->list_id;
+      }
     }
     return null;
   }
 
-  public function lisaa_tuote($lista_id, $tuotteen_nimi) {
-    $kysely = $this->valmistele('INSERT INTO items (list_id, name) VALUES (?, ?)');
-    return $kysely->execute(array($lista_id, $tuotteen_nimi));
+  public function lisaa_tuote($kayttaja_id, $lista_id, $tuotteen_nimi) {
+    if ($this->hae_lista($kayttaja_id, $lista_id)) {
+      $kysely = $this->valmistele('INSERT INTO items (list_id, name) VALUES (?, ?)');
+      return $kysely->execute(array($lista_id, $tuotteen_nimi));
+    }
+    return false;
   }
 
   public function paivita_lista($kayttaja_id, $lista_id, $nimi, $oletus) {
@@ -79,6 +84,15 @@ class Kyselyt {
       $this->paivita_kayttajan_oletus($kayttaja_id, $lista_id);
     }
     return $this->hae_lista($kayttaja_id, $lista_id);
+  }
+
+  private function onko_tuote_kayttajan($kayttaja_id, $tuote_id) {
+    $kysely = $this->valmistele('SELECT user_id FROM lists LEFT JOIN items ON lists.id = list_id WHERE items.id = ?');
+    if ($kysely->execute(array($tuote_id))) {
+      $id = $kysely->fetchObject()->user_id;
+      return $kayttaja_id == $id;
+    }
+    return false;
   }
 
   private function paivita_kayttajan_oletus($kayttaja_id, $lista_id) {
