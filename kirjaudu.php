@@ -9,6 +9,9 @@ if (isset($_GET['sisaan'])) {
   } else {
     ohjaa('kirjautuminen.php');
   }
+} elseif (isset($_GET['ulos'])) {
+  unset($sessio->kayttaja_id);
+  ohjaa('index.php');
 } else {
   die('Laiton toiminto!');
 }

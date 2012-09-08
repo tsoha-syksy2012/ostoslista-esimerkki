@@ -21,6 +21,10 @@ class Sessio {
     return isset($_SESSION[$avain]);
   }
 
+  public function __unset($avain) {
+    unset($_SESSION[$avain]);
+  }
+
 }
 
 $sessio = new Sessio();
