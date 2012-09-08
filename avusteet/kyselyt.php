@@ -86,6 +86,17 @@ class Kyselyt {
     return $this->hae_lista($kayttaja_id, $lista_id);
   }
 
+  public function luo_uusi_lista($kayttaja_id) {
+    date_default_timezone_set('UTC');
+    $pvm = date('Y-m-d');
+    $listan_nimi = "Ostoslista ($pvm)";
+    $kysely = $this->valmistele('INSERT INTO lists (user_id, name) VALUES (?, ?) RETURNING id');
+    if ($kysely->execute(array($kayttaja_id, $listan_nimi))) {
+      return $kysely->fetchObject()->id;
+    }
+    return false;
+  }
+
   private function onko_tuote_kayttajan($kayttaja_id, $tuote_id) {
     $kysely = $this->valmistele('SELECT user_id FROM lists LEFT JOIN items ON lists.id = list_id WHERE items.id = ?');
     if ($kysely->execute(array($tuote_id))) {
