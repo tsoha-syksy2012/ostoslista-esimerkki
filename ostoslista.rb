@@ -58,10 +58,20 @@ class Ostoslista < Sinatra::Base
   end
 
   get '/poistalistalta/:tuote' do
-    tuote = DB[:items].where(id: params[:tuote])
-    lista_id = tuote.first[:list_id]
-    tuote.delete
-    redirect "/lista/#{lista_id}"
+    tuoteet = DB[:items].where(id: params[:tuote])
+    tuote = tuoteet.first
+    if tuote
+      lista_id = tuote[:list_id]
+      lista = DB[:lists].where(id: lista_id).first
+      if lista[:user_id] == session[:kayttaja]
+        tuoteet.delete
+        redirect "/lista/#{lista_id}"
+      else
+        halt(404)
+      end
+    else
+      halt(404)
+    end
   end
 
   post '/lisaalistalle/:lista' do
