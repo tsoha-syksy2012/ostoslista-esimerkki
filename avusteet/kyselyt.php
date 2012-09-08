@@ -72,6 +72,20 @@ class Kyselyt {
     return $kysely->execute(array($lista_id, $tuotteen_nimi));
   }
 
+  public function paivita_lista($kayttaja_id, $lista_id, $nimi, $oletus) {
+    $kysely = $this->valmistele('UPDATE lists SET name = ? WHERE user_id = ? AND id = ?');
+    $kysely->execute(array($nimi, $kayttaja_id, $lista_id));
+    if ($ole<tus) {
+      $this->paivita_kayttajan_oletus($kayttaja_id, $lista_id);
+    }
+    return $this->hae_lista($kayttaja_id, $lista_id);
+  }
+
+  private function paivita_kayttajan_oletus($kayttaja_id, $lista_id) {
+    $this->valmistele('UPDATE lists SET is_default = false WHERE user_id = ?')->execute(array($kayttaja_id));
+    $this->valmistele('UPDATE lists SET is_default = true WHERE user_id = ? AND id = ?')->execute(array($kayttaja_id, $lista_id));
+  }
+
   private function valmistele($sqllause) {
     return $this->_pdo->prepare($sqllause);
   }

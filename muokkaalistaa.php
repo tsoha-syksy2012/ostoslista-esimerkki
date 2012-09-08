@@ -8,6 +8,7 @@ if (!$ostoslista) {
 }
 
 if (isset($_POST['nimi']) && isset($_POST['oletus'])) {
+  $ostoslista = $kyselija->paivita_lista($sessio->kayttaja_id, $_GET['lista'], $_POST['nimi'], $_POST['oletus']);
 }
 
 $otsikko = 'Ostoslista - ' . $ostoslista->name . ' - muokkaus';
