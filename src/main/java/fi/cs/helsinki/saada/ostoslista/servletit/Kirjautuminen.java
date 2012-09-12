@@ -16,8 +16,7 @@ public class Kirjautuminen extends OstoslistaServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("kirjautumislomake.jsp");
-        dispatcher.forward(request, response);
+        palautaJSP("kirjautumislomake.jsp", request, response);
     }
 
     @Override
