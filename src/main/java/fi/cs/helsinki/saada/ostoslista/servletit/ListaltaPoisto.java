@@ -14,7 +14,8 @@ public class ListaltaPoisto extends OstoslistaServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ohjaaSivulle("lista", response);
+        if (varmistaKirjautuminen(request, response)) {
+            ohjaaSivulle("lista", response);
+        }
     }
-
 }

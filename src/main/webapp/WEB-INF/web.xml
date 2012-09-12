@@ -20,6 +20,10 @@
         <servlet-name>ListaltaPoisto</servlet-name>
         <servlet-class>fi.cs.helsinki.saada.ostoslista.servletit.ListaltaPoisto</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Etusivu</servlet-name>
+        <servlet-class>fi.cs.helsinki.saada.ostoslista.servletit.Etusivu</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Kirjautuminen</servlet-name>
         <url-pattern>/kirjautuminen</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>ListaltaPoisto</servlet-name>
         <url-pattern>/poistalistalta</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Etusivu</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

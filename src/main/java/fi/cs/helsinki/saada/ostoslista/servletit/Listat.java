@@ -14,12 +14,9 @@ public class Listat extends OstoslistaServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        palautaJSP("listat.jsp", request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        if (varmistaKirjautuminen(request, response)) {
+            palautaJSP("listat.jsp", request, response);
+        }
     }
 
 }

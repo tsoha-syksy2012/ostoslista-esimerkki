@@ -9,21 +9,14 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author stb
  */
-public class ListanMuokkaus extends OstoslistaServlet {
+public class Etusivu extends OstoslistaServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (varmistaKirjautuminen(request, response)) {
-            palautaJSP("muokkauslomake.jsp", request, response);
-        }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        if (varmistaKirjautuminen(request, response)) {
             ohjaaSivulle("lista", response);
         }
     }
+
 }
