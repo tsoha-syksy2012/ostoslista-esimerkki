@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author stb
  */
-public class Kirjautuminen extends HttpServlet {
+public class Kirjautuminen extends OstoslistaServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -23,7 +23,7 @@ public class Kirjautuminen extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("lista");
+        ohjaaSivulle("lista", response);
     }
 
 }
