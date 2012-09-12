@@ -4,9 +4,17 @@
         <servlet-name>Kirjautuminen</servlet-name>
         <servlet-class>fi.cs.helsinki.saada.ostoslista.servletit.Kirjautuminen</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Lista</servlet-name>
+        <servlet-class>fi.cs.helsinki.saada.ostoslista.servletit.Lista</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Kirjautuminen</servlet-name>
         <url-pattern>/kirjautuminen</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Lista</servlet-name>
+        <url-pattern>/lista</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

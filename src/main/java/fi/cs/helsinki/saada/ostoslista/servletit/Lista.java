@@ -11,18 +11,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author stb
  */
-public class Kirjautuminen extends HttpServlet {
+public class Lista extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("kirjautumislomake.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("lista.jsp");
         dispatcher.forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
     }
 
 }
