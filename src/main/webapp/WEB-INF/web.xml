@@ -8,6 +8,10 @@
         <servlet-name>Lista</servlet-name>
         <servlet-class>fi.cs.helsinki.saada.ostoslista.servletit.Lista</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Listat</servlet-name>
+        <servlet-class>fi.cs.helsinki.saada.ostoslista.servletit.Listat</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Kirjautuminen</servlet-name>
         <url-pattern>/kirjautuminen</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>Lista</servlet-name>
         <url-pattern>/lista</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Listat</servlet-name>
+        <url-pattern>/listat</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
