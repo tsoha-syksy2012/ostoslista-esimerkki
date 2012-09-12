@@ -1,5 +1,5 @@
 <%@include file="yla.jspf" %>
-<h2>Moukkaa listaa: Viikonlopun hätävara</h2>
+<h2>Muokkaa listaa: Viikonlopun hätävara</h2>
 <p><a href="lista">Takaisin listaan</a></p>
 <form action="muokkaalistaa" method="POST">
     <fieldset>

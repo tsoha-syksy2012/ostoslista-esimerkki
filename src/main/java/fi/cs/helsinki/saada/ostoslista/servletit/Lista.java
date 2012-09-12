@@ -15,6 +15,7 @@ public class Lista extends OstoslistaServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (varmistaKirjautuminen(request, response)) {
+            asetaOtsikko("Viikonlopun hätävara", request);
             palautaJSP("lista.jsp", request, response);
         }
     }

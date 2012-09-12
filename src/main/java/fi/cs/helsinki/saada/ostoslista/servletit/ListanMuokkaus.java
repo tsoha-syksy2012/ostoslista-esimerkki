@@ -15,6 +15,7 @@ public class ListanMuokkaus extends OstoslistaServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (varmistaKirjautuminen(request, response)) {
+            asetaOtsikko("Viikonlopun hätävara - muokkaus", request);
             palautaJSP("muokkauslomake.jsp", request, response);
         }
     }

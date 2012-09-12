@@ -26,6 +26,10 @@ class OstoslistaServlet extends HttpServlet {
         return true;
     }
 
+    protected void asetaOtsikko(String otsikko, HttpServletRequest request) {
+        request.setAttribute("otsikko", "Ostoslista - " + otsikko);
+    }
+
     protected void palautaJSP(String sivu, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher(sivu);
