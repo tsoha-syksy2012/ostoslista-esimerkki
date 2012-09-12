@@ -22,6 +22,7 @@ class OstoslistaServlet extends HttpServlet {
             ohjaaSivulle("kirjautuminen", response);
             return false;
         }
+        request.setAttribute("kayttaja", true);
         return true;
     }
 
