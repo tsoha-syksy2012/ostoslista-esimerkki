@@ -46,8 +46,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Etusivu</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/etusivu</url-pattern>
     </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>etusivu</welcome-file>
+    </welcome-file-list>
     <session-config>
         <session-timeout>
             30
