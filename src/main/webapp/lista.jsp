@@ -1,12 +1,12 @@
 <%@include file="yla.jspf" %>
 <h2>Viikonlopun h‰t‰vara</h2>
-<p><a href="muokkaalistaa.html">Muokkaa listaa</a></p>
+<p><a href="muokkaalistaa">Muokkaa listaa</a></p>
 <ul>
-    <li>Maitoa <a href="poistalistalta.html?tuote=123">[poista]</a></li>
-    <li>Leip‰‰ <a href="poistalistalta.html?tuote=124">[poista]</a></li>
-    <li>Jauhoja <a href="poistalistalta.html?tuote=125">[poista]</a></li>
+    <li>Maitoa <a href="poistalistalta?tuote=123">[poista]</a></li>
+    <li>Leip‰‰ <a href="poistalistalta?tuote=124">[poista]</a></li>
+    <li>Jauhoja <a href="poistalistalta?tuote=125">[poista]</a></li>
 </ul>
-<form action="lista.html" method="POST">
+<form action="lista" method="POST">
     <fieldset>
     <legend>Uusi tuote listaan</legend>
     <label for="tuote">Tuotteen nimi:</label>
@@ -14,5 +14,5 @@
     <input type="submit" value="Lis‰‰ tuote" />
     </fieldset>
 </form>
-<p><a href="listat.html">N‰yt‰ kaikki ostoslistat</a></p>
+<p><a href="listat">N‰yt‰ kaikki ostoslistat</a></p>
 <%@include file="ala.jspf" %>

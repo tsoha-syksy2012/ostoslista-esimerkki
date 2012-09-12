@@ -9,4 +9,4 @@
   <body>
     <img src="logo.jpg" title="Ostoslista" alt="Ostoslistan logo" />
     <h1>Ostoslista</h1>
-    <p><a href="kirjautuminen.html">Kirjaudu ulos</a></p>
+    <p><a href="kirjautuminen">Kirjaudu ulos</a></p>
