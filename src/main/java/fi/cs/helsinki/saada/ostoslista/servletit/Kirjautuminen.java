@@ -28,7 +28,7 @@ public class Kirjautuminen extends OstoslistaServlet {
         Kayttaja kayttaja = Kayttaja.kirjauduSisaan(tunnus, salasana);
         if (kayttaja != null) {
             session.setAttribute("kayttaja_id", kayttaja.getId());
-            ohjaaSivulle("lista", response);
+            ohjaaOletusListaan(kayttaja, response);
         } else {
             naytaLomake(request, response);
         }

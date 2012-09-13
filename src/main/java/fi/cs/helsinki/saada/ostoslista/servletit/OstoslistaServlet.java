@@ -1,5 +1,6 @@
 package fi.cs.helsinki.saada.ostoslista.servletit;
 
+import fi.cs.helsinki.saada.ostoslista.mallit.Kayttaja;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,13 +18,16 @@ class OstoslistaServlet extends HttpServlet {
     protected boolean varmistaKirjautuminen(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         HttpSession session = request.getSession(true);
-        Long kayttajaId = (Long) session.getAttribute("kayttaja_id");
-        if (kayttajaId == null) {
-            ohjaaSivulle("kirjautuminen", response);
-            return false;
+        Object kayttajaId = session.getAttribute("kayttaja_id");
+        if (kayttajaId != null) {
+            Kayttaja kayttaja = Kayttaja.haeKayttaja((Long) kayttajaId);
+            if (kayttaja != null) {
+                request.setAttribute("kayttaja", kayttaja);
+                return true;
+            }
         }
-        request.setAttribute("kayttaja", true);
-        return true;
+        ohjaaSivulle("kirjautuminen", response);
+        return false;
     }
 
     protected void asetaOtsikko(String otsikko, HttpServletRequest request) {
@@ -40,4 +44,7 @@ class OstoslistaServlet extends HttpServlet {
         response.sendRedirect(sivu);
     }
 
+    protected void ohjaaOletusListaan(Kayttaja kayttaja, HttpServletResponse response) throws IOException {
+        ohjaaSivulle("lista?lista=" + kayttaja.getOletusLista().getId(), response);
+    }
 }

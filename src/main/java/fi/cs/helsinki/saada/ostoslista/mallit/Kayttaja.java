@@ -16,11 +16,19 @@ public class Kayttaja {
         return id;
     }
 
+    public Ostoslista getOletusLista() {
+        return Ostoslista.kayttajanOletusLista(getId());
+    }
+
     public static Kayttaja kirjauduSisaan(String tunnus, String salasana) {
         if (tunnus.equals("foobar") && salasana.equals("password")) {
             return new Kayttaja(1);
         }
         return null;
+    }
+
+    public static Kayttaja haeKayttaja(long id) {
+        return new Kayttaja(1);
     }
 
 }

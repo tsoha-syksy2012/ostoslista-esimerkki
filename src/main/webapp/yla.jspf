@@ -11,6 +11,6 @@
   <body>
     <img src="logo.jpg" title="Ostoslista" alt="Ostoslistan logo" />
     <h1>Ostoslista</h1>
-    <c:if test="${kayttaja}">
+    <c:if test="${kayttaja != null}">
       <p><a href="ulos">Kirjaudu ulos</a></p>
     </c:if>
