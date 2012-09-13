@@ -30,6 +30,10 @@ class OstoslistaServlet extends HttpServlet {
         return false;
     }
 
+    protected Kayttaja annaKayttaja(HttpServletRequest request) {
+        return (Kayttaja) request.getAttribute("kayttaja");
+    }
+
     protected void asetaOtsikko(String otsikko, HttpServletRequest request) {
         request.setAttribute("otsikko", "Ostoslista - " + otsikko);
     }
@@ -47,4 +51,9 @@ class OstoslistaServlet extends HttpServlet {
     protected void ohjaaOletusListaan(Kayttaja kayttaja, HttpServletResponse response) throws IOException {
         ohjaaSivulle("lista?lista=" + kayttaja.getOletusLista().getId(), response);
     }
+
+    protected void annaVirhe(HttpServletResponse response) throws IOException {
+        response.sendError(HttpServletResponse.SC_NOT_FOUND);
+    }
+
 }

@@ -17,11 +17,20 @@ public class Lista extends OstoslistaServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (varmistaKirjautuminen(request, response)) {
-            Ostoslista lista = Ostoslista.haeLista((Kayttaja) request.getAttribute("kayttaja"), new Long(request.getParameter("lista")));
-            asetaOtsikko(lista.getNimi(), request);
-            request.setAttribute("lista", lista);
-            request.setAttribute("tuotteet", lista.getTuotteet());
-            palautaJSP("lista.jsp", request, response);
+            String listaId = request.getParameter("lista");
+            if (listaId == null) {
+                annaVirhe(response);
+                return;
+            }
+            Ostoslista lista = Ostoslista.haeLista((Kayttaja) request.getAttribute("kayttaja"), new Long(listaId));
+            if (lista.onKayttajan(annaKayttaja(request))) {
+                asetaOtsikko(lista.getNimi(), request);
+                request.setAttribute("lista", lista);
+                request.setAttribute("tuotteet", lista.getTuotteet());
+                palautaJSP("lista.jsp", request, response);
+            } else {
+                annaVirhe(response);
+            }
         }
     }
 }

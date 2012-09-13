@@ -1,5 +1,8 @@
 package fi.cs.helsinki.saada.ostoslista.servletit;
 
+import fi.cs.helsinki.saada.ostoslista.mallit.Kayttaja;
+import fi.cs.helsinki.saada.ostoslista.mallit.Ostoslista;
+import fi.cs.helsinki.saada.ostoslista.mallit.Tuote;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +18,12 @@ public class ListaltaPoisto extends OstoslistaServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (varmistaKirjautuminen(request, response)) {
-            ohjaaSivulle("lista", response);
+            Tuote tuote = Tuote.haeTuote(new Long(request.getParameter("tuote")));
+            Ostoslista lista = tuote.getOstoslista();
+            if (lista.onKayttajan(annaKayttaja(request))) {
+                tuote.poista();
+            }
+            ohjaaSivulle("lista?lista=" + lista.getId(), response);
         }
     }
 }
