@@ -16,7 +16,7 @@ public class Ulos extends OstoslistaServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(true);
-        session.removeAttribute("kayttaja_id");
+        session.removeAttribute(kayttajaSessioAvain());
         ohjaaSivulle("kirjautuminen", response);
     }
 

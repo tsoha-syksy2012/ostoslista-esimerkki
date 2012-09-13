@@ -18,7 +18,7 @@ class OstoslistaServlet extends HttpServlet {
     protected boolean varmistaKirjautuminen(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         HttpSession session = request.getSession(true);
-        Object kayttajaId = session.getAttribute("kayttaja_id");
+        Object kayttajaId = session.getAttribute(kayttajaSessioAvain());
         if (kayttajaId != null) {
             Kayttaja kayttaja = Kayttaja.haeKayttaja((Long) kayttajaId);
             if (kayttaja != null) {
@@ -32,6 +32,10 @@ class OstoslistaServlet extends HttpServlet {
 
     protected Kayttaja annaKayttaja(HttpServletRequest request) {
         return (Kayttaja) request.getAttribute("kayttaja");
+    }
+
+    protected String kayttajaSessioAvain() {
+        return "kayttaja_id";
     }
 
     protected void asetaOtsikko(String otsikko, HttpServletRequest request) {

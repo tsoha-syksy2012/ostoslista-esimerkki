@@ -23,15 +23,18 @@ public class Kirjautuminen extends OstoslistaServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(true);
-        String tunnus = (String) request.getParameter("tunnus");
-        String salasana = (String) request.getParameter("salasana");
-        Kayttaja kayttaja = Kayttaja.kirjauduSisaan(tunnus, salasana);
-        if (kayttaja != null) {
-            session.setAttribute("kayttaja_id", kayttaja.getId());
-            ohjaaOletusListaan(kayttaja, response);
-        } else {
-            naytaLomake(request, response);
+        String tunnus = request.getParameter("tunnus");
+        String salasana = request.getParameter("salasana");
+        if (tunnus != null && salasana != null) {
+            Kayttaja kayttaja = Kayttaja.kirjauduSisaan(tunnus, salasana);
+            if (kayttaja != null) {
+                session.setAttribute(kayttajaSessioAvain(), kayttaja.getId());
+                ohjaaOletusListaan(kayttaja, response);
+                return;
+            }
         }
+        request.setAttribute("virheviesti", "Tarkista käyttäjätunnus ja salasana");
+        naytaLomake(request, response);
     }
 
     private void naytaLomake(HttpServletRequest request, HttpServletResponse response)
@@ -39,5 +42,4 @@ public class Kirjautuminen extends OstoslistaServlet {
         asetaOtsikko("kirjautuminen", request);
         palautaJSP("kirjautumislomake.jsp", request, response);
     }
-
 }

@@ -14,3 +14,7 @@ a:hover {
 footer p {
   text-align: center;
 }
+
+p.virhe {
+    color: red;
+}
