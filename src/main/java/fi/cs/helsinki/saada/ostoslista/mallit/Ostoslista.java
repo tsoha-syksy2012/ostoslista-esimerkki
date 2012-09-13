@@ -10,10 +10,14 @@ public class Ostoslista {
 
     private final long id;
     private final long kayttajaId;
+    private final String nimi;
+    private final boolean oletus;
 
-    private Ostoslista(long id, long kayttajaId) {
+    public Ostoslista(long id, long kayttajaId, String nimi, boolean oletus) {
         this.id = id;
         this.kayttajaId = kayttajaId;
+        this.nimi = nimi;
+        this.oletus = oletus;
     }
 
     public long getId() {
@@ -21,7 +25,11 @@ public class Ostoslista {
     }
 
     public String getNimi() {
-        return "Ostoslistan nimi";
+        return nimi;
+    }
+
+    public boolean isOletus() {
+        return oletus;
     }
 
     public ArrayList<Tuote> getTuotteet() {
@@ -29,15 +37,15 @@ public class Ostoslista {
     }
 
     public static Ostoslista kayttajanOletusLista(long kayttajaId) {
-        return new Ostoslista(1, kayttajaId);
+        return new Ostoslista(1, kayttajaId, "oletuslista", true);
     }
 
     public static Ostoslista haeLista(Kayttaja kayttaja, long id) {
-        return new Ostoslista(id, kayttaja.getId());
+        return new Ostoslista(id, kayttaja.getId(), "lista", false);
     }
 
     public static Ostoslista haeLista(long id) {
-        return new Ostoslista(id, 1);
+        return new Ostoslista(id, 1, "lista", false);
     }
 
     public boolean onKayttajan(Kayttaja kayttaja) {

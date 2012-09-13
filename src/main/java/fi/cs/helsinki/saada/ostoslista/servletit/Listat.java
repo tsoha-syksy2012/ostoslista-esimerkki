@@ -15,6 +15,7 @@ public class Listat extends OstoslistaServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (varmistaKirjautuminen(request, response)) {
+            request.setAttribute("listat", annaKayttaja(request).getKaikkiListat());
             asetaOtsikko("Kaikki ostoslistat", request);
             palautaJSP("listat.jsp", request, response);
         }
