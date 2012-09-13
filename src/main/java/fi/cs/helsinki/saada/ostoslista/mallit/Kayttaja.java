@@ -6,9 +6,20 @@ package fi.cs.helsinki.saada.ostoslista.mallit;
  */
 public class Kayttaja {
 
+    private long id;
+
+    public Kayttaja(long id) {
+        this.id = id;
+    }
+
+    public long getId() {
+        return id;
+    }
+
     public static Kayttaja kirjauduSisaan(String tunnus, String salasana) {
-        System.out.println(tunnus);
-        System.out.println(salasana);
+        if (tunnus.equals("foobar") && salasana.equals("password")) {
+            return new Kayttaja(1);
+        }
         return null;
     }
 

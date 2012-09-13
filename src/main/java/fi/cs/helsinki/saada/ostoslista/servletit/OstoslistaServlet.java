@@ -17,7 +17,7 @@ class OstoslistaServlet extends HttpServlet {
     protected boolean varmistaKirjautuminen(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         HttpSession session = request.getSession(true);
-        Long kayttajaId = (Long) session.getAttribute("kayttaja");
+        Long kayttajaId = (Long) session.getAttribute("kayttaja_id");
         if (kayttajaId == null) {
             ohjaaSivulle("kirjautuminen", response);
             return false;
