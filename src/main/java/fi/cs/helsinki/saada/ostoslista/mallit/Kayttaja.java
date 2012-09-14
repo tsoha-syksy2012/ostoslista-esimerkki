@@ -52,11 +52,7 @@ public class Kayttaja {
     }
 
     public ArrayList<Ostoslista> getKaikkiListat() {
-        ArrayList<Ostoslista> listat = new ArrayList<Ostoslista>();
-        listat.add(new Ostoslista(1, id, "lista 1", false));
-        listat.add(new Ostoslista(2, id, "lista 2", true));
-        listat.add(new Ostoslista(3, id, "lista 3", false));
-        return listat;
+        return Ostoslista.kayttajanListat(this);
     }
 
     public static Kayttaja kirjauduSisaan(String tunnus, String salasana) {

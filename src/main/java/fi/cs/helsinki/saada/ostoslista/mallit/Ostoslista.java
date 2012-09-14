@@ -38,6 +38,24 @@ public class Ostoslista {
             yhteys.close();
             return lista;
         }
+
+        public ArrayList<Ostoslista> haeListat(long kayttajaId) throws SQLException {
+            ArrayList<Ostoslista> listat = new ArrayList<Ostoslista>();
+            Connection yhteys = luoYhteys();
+            PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM lists WHERE user_id = ?");
+            prepareStatement.setLong(1, kayttajaId);
+            if (prepareStatement.execute()) {
+                ResultSet resultSet = prepareStatement.getResultSet();
+                while (resultSet.next()) {
+                    listat.add(new Ostoslista(resultSet.getLong("id"),
+                            resultSet.getLong("user_id"),
+                            resultSet.getString("name"),
+                            resultSet.getBoolean("is_default")));
+                }
+            }
+            yhteys.close();
+            return listat;
+        }
     }
     private final long id;
     private final long kayttajaId;
@@ -67,6 +85,18 @@ public class Ostoslista {
         return Tuote.listanTuotteet(getId());
     }
 
+    public boolean onKayttajan(Kayttaja kayttaja) {
+        return kayttaja.getId() == kayttajaId;
+    }
+
+    public boolean setNimi(String nimi) {
+        return true;
+    }
+
+    public void lisaaTuote(String tuotteenNimi) {
+        Tuote.luoUusi(this, tuotteenNimi);
+    }
+
     public static Ostoslista kayttajanOletusLista(Kayttaja kayttaja) {
         try {
             OstoslistaKysely kysely = new OstoslistaKysely();
@@ -87,19 +117,19 @@ public class Ostoslista {
         return new Ostoslista(id, 1, "lista", false);
     }
 
-    public boolean onKayttajan(Kayttaja kayttaja) {
-        return kayttaja.getId() == kayttajaId;
+    public static ArrayList<Ostoslista> kayttajanListat(Kayttaja kayttaja) {
+        try {
+            OstoslistaKysely kysely = new OstoslistaKysely();
+            return kysely.haeListat(kayttaja.getId());
+        } catch (SQLException ex) {
+            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public static Ostoslista luoUusi(Kayttaja kayttaja) {
         return new Ostoslista(99, kayttaja.getId(), "uusi lista", false);
-    }
-
-    public boolean setNimi(String nimi) {
-        return true;
-    }
-
-    public void lisaaTuote(String tuotteenNimi) {
-        Tuote.luoUusi(this, tuotteenNimi);
     }
 }
