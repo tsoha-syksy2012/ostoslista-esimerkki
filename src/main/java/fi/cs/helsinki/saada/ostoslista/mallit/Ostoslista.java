@@ -59,21 +59,21 @@ public class Ostoslista {
             return listat;
         }
 
-        private Ostoslista haeLista(long kayttajaId, long id) throws SQLException {
+        public Ostoslista haeLista(long kayttajaId, long id) throws SQLException {
             Connection yhteys = luoYhteys();
             PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM lists WHERE user_id = ? AND id = ?");
             prepareStatement.setLong(1, kayttajaId);
             prepareStatement.setLong(2, id);
-            Ostoslista lista = null;
-            if (prepareStatement.execute()) {
-                ResultSet resultSet = prepareStatement.getResultSet();
-                while (resultSet.next()) {
-                    lista = new Ostoslista(resultSet.getLong("id"),
-                            resultSet.getLong("user_id"),
-                            resultSet.getString("name"),
-                            resultSet.getBoolean("is_default"));
-                }
-            }
+            Ostoslista lista = suoritaListaHaku(prepareStatement);
+            yhteys.close();
+            return lista;
+        }
+
+        public Ostoslista haeLista(long id) throws SQLException {
+            Connection yhteys = luoYhteys();
+            PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM lists WHERE id = ?");
+            prepareStatement.setLong(1, id);
+            Ostoslista lista = suoritaListaHaku(prepareStatement);
             yhteys.close();
             return lista;
         }
@@ -96,6 +96,20 @@ public class Ostoslista {
             yhteys.close();
             return lista;
         }
+
+        private Ostoslista suoritaListaHaku(PreparedStatement prepareStatement) throws SQLException {
+            if (prepareStatement.execute()) {
+                ResultSet resultSet = prepareStatement.getResultSet();
+                while (resultSet.next()) {
+                    return new Ostoslista(resultSet.getLong("id"),
+                            resultSet.getLong("user_id"),
+                            resultSet.getString("name"),
+                            resultSet.getBoolean("is_default"));
+                }
+            }
+            return null;
+        }
+
     }
     private final long id;
     private final long kayttajaId;
@@ -162,7 +176,15 @@ public class Ostoslista {
     }
 
     public static Ostoslista haeLista(long id) {
-        return new Ostoslista(id, 1, "lista", false);
+        try {
+            OstoslistaKysely kysely = new OstoslistaKysely();
+            return kysely.haeLista(id);
+        } catch (SQLException ex) {
+            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public static ArrayList<Ostoslista> kayttajanListat(Kayttaja kayttaja) {
