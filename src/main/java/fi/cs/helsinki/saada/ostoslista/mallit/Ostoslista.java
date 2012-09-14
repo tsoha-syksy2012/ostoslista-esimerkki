@@ -119,6 +119,27 @@ public class Ostoslista {
             yhteys.close();
             return onnistuiko;
         }
+
+        private boolean asetaOletusLista(long kayttajaId, long listaId) throws SQLException {
+            Connection yhteys = luoYhteys();
+            boolean autoCommit = yhteys.getAutoCommit();
+            boolean onnistuiko = false;
+            try {
+                PreparedStatement poistetaanOletukset = yhteys.prepareStatement("UPDATE lists SET is_default = false WHERE user_id = ?");
+                PreparedStatement asetetaanUusiOletus = yhteys.prepareStatement("UPDATE lists SET is_default = true WHERE id = ?");
+                poistetaanOletukset.setLong(1, kayttajaId);
+                asetetaanUusiOletus.setLong(1, listaId);
+                onnistuiko = poistetaanOletukset.executeUpdate() > 0 && asetetaanUusiOletus.executeUpdate() > 0;
+                yhteys.commit();
+            } catch (SQLException ex) {
+                Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
+                yhteys.rollback();
+            } finally {
+                yhteys.setAutoCommit(autoCommit);
+                yhteys.close();
+                return onnistuiko;
+            }
+        }
     }
     private final long id;
     private final long kayttajaId;
@@ -229,5 +250,17 @@ public class Ostoslista {
             Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    static boolean asetaKayttajanOletusLista(Kayttaja kayttaja, Ostoslista lista) {
+        try {
+            OstoslistaKysely kysely = new OstoslistaKysely();
+            return kysely.asetaOletusLista(kayttaja.getId(), lista.getId());
+        } catch (SQLException ex) {
+            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }

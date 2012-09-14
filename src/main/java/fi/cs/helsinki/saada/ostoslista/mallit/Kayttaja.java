@@ -51,6 +51,10 @@ public class Kayttaja {
         return Ostoslista.kayttajanOletusLista(this);
     }
 
+    public boolean setOletusLista(Ostoslista lista) {
+        return Ostoslista.asetaKayttajanOletusLista(this, lista);
+    }
+
     public ArrayList<Ostoslista> getKaikkiListat() {
         return Ostoslista.kayttajanListat(this);
     }
@@ -71,8 +75,4 @@ public class Kayttaja {
         return new Kayttaja(1);
     }
 
-    public boolean setOletusLista(Ostoslista lista) {
-        //TODO: luo oletus
-        return true;
-    }
 }
