@@ -44,7 +44,7 @@ public class Ostoslista {
         public ArrayList<Ostoslista> haeListat(long kayttajaId) throws SQLException {
             ArrayList<Ostoslista> listat = new ArrayList<Ostoslista>();
             Connection yhteys = luoYhteys();
-            PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM lists WHERE user_id = ?");
+            PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM lists WHERE user_id = ? ORDER BY name");
             prepareStatement.setLong(1, kayttajaId);
             if (prepareStatement.execute()) {
                 ResultSet resultSet = prepareStatement.getResultSet();

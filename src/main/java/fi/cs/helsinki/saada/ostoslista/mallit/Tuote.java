@@ -24,7 +24,7 @@ public class Tuote {
         public ArrayList<Tuote> haeTuotteet(long listaId) throws SQLException {
             ArrayList<Tuote> tuotteet = new ArrayList<Tuote>();
             Connection yhteys = luoYhteys();
-            PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM items WHERE list_id = ?");
+            PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM items WHERE list_id = ? ORDER BY name");
             prepareStatement.setLong(1, listaId);
             if (prepareStatement.execute()) {
                 ResultSet resultSet = prepareStatement.getResultSet();
