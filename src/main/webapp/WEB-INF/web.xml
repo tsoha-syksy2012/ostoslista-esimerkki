@@ -28,6 +28,10 @@
         <servlet-name>Ulos</servlet-name>
         <servlet-class>fi.cs.helsinki.saada.ostoslista.servletit.Ulos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UusiLista</servlet-name>
+        <servlet-class>fi.cs.helsinki.saada.ostoslista.servletit.UusiLista</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Kirjautuminen</servlet-name>
         <url-pattern>/kirjautuminen</url-pattern>
@@ -59,6 +63,10 @@
     <welcome-file-list>
         <welcome-file>etusivu</welcome-file>
     </welcome-file-list>
+    <servlet-mapping>
+        <servlet-name>UusiLista</servlet-name>
+        <url-pattern>/uusilista</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

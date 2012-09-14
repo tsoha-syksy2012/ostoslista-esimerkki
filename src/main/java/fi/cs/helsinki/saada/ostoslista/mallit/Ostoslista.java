@@ -52,4 +52,8 @@ public class Ostoslista {
         return kayttaja.getId() == kayttajaId;
     }
 
+    public static Ostoslista luoUusi(Kayttaja kayttaja) {
+        return new Ostoslista(99, kayttaja.getId(), "uusi lista", false);
+    }
+
 }

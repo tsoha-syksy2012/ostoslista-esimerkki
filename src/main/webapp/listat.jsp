@@ -7,7 +7,7 @@
         <li><a href="lista?lista=${lista.id}">${lista.nimi}</a><c:if test="${lista.oletus}"> (oletus)</c:if></li>
     </c:forEach>
 </ul>
-<form action="lista" method="POST">
+<form action="uusilista" method="POST">
     <p><input type="submit" value="Luo uusi lista" /></p>
 </form>
 <%@include file="ala.jspf" %>
