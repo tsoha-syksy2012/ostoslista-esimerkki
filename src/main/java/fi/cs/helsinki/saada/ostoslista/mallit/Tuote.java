@@ -1,12 +1,44 @@
 package fi.cs.helsinki.saada.ostoslista.mallit;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
 
 /**
  *
  * @author stb
  */
 public class Tuote {
+
+    private static class TuoteKysely extends AbstractKysely {
+
+        public TuoteKysely() throws NamingException {
+            super();
+        }
+
+        public ArrayList<Tuote> haeTuotteet(long listaId) throws SQLException {
+            ArrayList<Tuote> tuotteet = new ArrayList<Tuote>();
+            Connection yhteys = luoYhteys();
+            PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM items WHERE list_id = ?");
+            prepareStatement.setLong(1, listaId);
+            if (prepareStatement.execute()) {
+                ResultSet resultSet = prepareStatement.getResultSet();
+                while (resultSet.next()) {
+                    tuotteet.add(new Tuote(resultSet.getLong("id"),
+                            resultSet.getLong("list_id"),
+                            resultSet.getString("name")));
+                }
+            }
+            yhteys.close();
+            return tuotteet;
+        }
+
+    }
 
     private final long id;
     private final String nimi;
@@ -38,13 +70,16 @@ public class Tuote {
         return new Tuote(id, 1, "esimerkki tuote");
     }
 
-    public static ArrayList<Tuote> listanTuotteet(long listaId) {
-        ArrayList<Tuote> tuotteet = new ArrayList<Tuote>();
-        tuotteet.add(new Tuote(1, listaId, "tuote 1"));
-        tuotteet.add(new Tuote(2, listaId, "tuote 2"));
-        tuotteet.add(new Tuote(3, listaId, "tuote 3"));
-        tuotteet.add(new Tuote(4, listaId, "tuote 4"));
-        return tuotteet;
+    public static ArrayList<Tuote> listanTuotteet(Ostoslista lista) {
+        try {
+            TuoteKysely kysely = new TuoteKysely();
+            return kysely.haeTuotteet(lista.getId());
+        } catch (SQLException ex) {
+            Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public static void luoUusi(Ostoslista lista, String nimi) {
