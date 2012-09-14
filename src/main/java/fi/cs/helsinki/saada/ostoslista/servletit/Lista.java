@@ -33,4 +33,22 @@ public class Lista extends OstoslistaServlet {
             }
         }
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        if (varmistaKirjautuminen(request, response)) {
+            String listaId = request.getParameter("lista");
+            if (listaId == null) {
+                annaVirhe(response);
+                return;
+            }
+            Ostoslista lista = Ostoslista.haeLista((Kayttaja) request.getAttribute("kayttaja"), new Long(listaId));
+            if (lista.onKayttajan(annaKayttaja(request))) {
+                String tuotteenNimi = request.getParameter("tuote");
+                lista.lisaaTuote(tuotteenNimi);
+            }
+            ohjaaSivulle("lista?lista=" + lista.getId(), response);
+        }
+    }
 }

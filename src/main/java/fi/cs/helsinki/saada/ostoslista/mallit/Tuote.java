@@ -30,6 +30,10 @@ public class Tuote {
         return Ostoslista.haeLista(listaId);
     }
 
+    public void poista() {
+        // Poista
+    }
+
     public static Tuote haeTuote(long id) {
         return new Tuote(id, 1, "esimerkki tuote");
     }
@@ -43,8 +47,8 @@ public class Tuote {
         return tuotteet;
     }
 
-    public void poista() {
-        // Poista
+    public static void luoUusi(Ostoslista lista, String nimi) {
+        //TODO: Luo uusi
     }
 
 }

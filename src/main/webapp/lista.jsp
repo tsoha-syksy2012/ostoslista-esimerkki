@@ -14,7 +14,7 @@
         <p>Listassa ei ole tuotteita</p>
     </c:otherwise>
 </c:choose>
-<form action="lisaalistaan?lista=${lista.id}" method="POST">
+<form action="lista?lista=${lista.id}" method="POST">
     <fieldset>
         <legend>Uusi tuote listaan</legend>
         <label for="tuote">Tuotteen nimi:</label>

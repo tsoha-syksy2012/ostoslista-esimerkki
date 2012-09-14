@@ -60,4 +60,8 @@ public class Ostoslista {
         return true;
     }
 
+    public void lisaaTuote(String tuotteenNimi) {
+        Tuote.luoUusi(this, tuotteenNimi);
+    }
+
 }
