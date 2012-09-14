@@ -2,6 +2,8 @@ package fi.cs.helsinki.saada.ostoslista.servletit;
 
 import fi.cs.helsinki.saada.ostoslista.mallit.Kayttaja;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +28,12 @@ public class Kirjautuminen extends OstoslistaServlet {
         String tunnus = request.getParameter("tunnus");
         String salasana = request.getParameter("salasana");
         if (tunnus != null && salasana != null) {
-            Kayttaja kayttaja = Kayttaja.kirjauduSisaan(tunnus, salasana);
+            Kayttaja kayttaja = null;
+            try {
+                kayttaja = Kayttaja.kirjauduSisaan(tunnus, salasana);
+            } catch (Exception ex) {
+                Logger.getLogger(Kirjautuminen.class.getName()).log(Level.SEVERE, null, ex);
+            }
             if (kayttaja != null) {
                 session.setAttribute(kayttajaSessioAvain(), kayttaja.getId());
                 ohjaaOletusListaan(kayttaja, response);
