@@ -3,15 +3,15 @@
 <h2>${lista.nimi}</h2>
 <p><a href="muokkaalistaa?lista=${lista.id}">Muokkaa listaa</a></p>
 <c:choose>
-    <c:when test="${!tuotteet.isEmpty()}">
+    <c:when test="${empty tuotteet}">
+        <p>Listassa ei ole tuotteita</p>
+    </c:when>
+    <c:otherwise>
         <ul>
             <c:forEach var="tuote" items="${tuotteet}">
                 <li>${tuote.nimi} <a href="poistalistalta?tuote=${tuote.id}">[poista]</a></li>
             </c:forEach>
         </ul>
-    </c:when>
-    <c:otherwise>
-        <p>Listassa ei ole tuotteita</p>
     </c:otherwise>
 </c:choose>
 <form action="lista?lista=${lista.id}" method="POST">
