@@ -110,6 +110,15 @@ public class Ostoslista {
             return null;
         }
 
+        public boolean muutaNimea(long id, String nimi) throws SQLException {
+            Connection yhteys = luoYhteys();
+            PreparedStatement prepareStatement = yhteys.prepareStatement("UPDATE lists SET name = ? WHERE id = ?");
+            prepareStatement.setString(1, nimi);
+            prepareStatement.setLong(2, id);
+            boolean onnistuiko = prepareStatement.executeUpdate() > 0;
+            yhteys.close();
+            return onnistuiko;
+        }
     }
     private final long id;
     private final long kayttajaId;
@@ -144,7 +153,18 @@ public class Ostoslista {
     }
 
     public boolean setNimi(String nimi) {
-        return true;
+        try {
+            OstoslistaKysely kysely = new OstoslistaKysely();
+            if (kysely.muutaNimea(getId(), nimi)) {
+                this.nimi = nimi;
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     public void lisaaTuote(String tuotteenNimi) {
