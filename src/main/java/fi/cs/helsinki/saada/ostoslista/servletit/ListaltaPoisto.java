@@ -1,6 +1,5 @@
 package fi.cs.helsinki.saada.ostoslista.servletit;
 
-import fi.cs.helsinki.saada.ostoslista.mallit.Kayttaja;
 import fi.cs.helsinki.saada.ostoslista.mallit.Ostoslista;
 import fi.cs.helsinki.saada.ostoslista.mallit.Tuote;
 import java.io.IOException;

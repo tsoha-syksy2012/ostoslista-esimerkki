@@ -47,6 +47,31 @@ public class Tuote {
             yhteys.close();
         }
 
+        public Tuote haeTuote(long id) throws SQLException {
+            Connection yhteys = luoYhteys();
+            PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM items WHERE id = ?");
+            prepareStatement.setLong(1, id);
+            Tuote tuote = null;
+            if (prepareStatement.execute()) {
+                ResultSet resultSet = prepareStatement.getResultSet();
+                while (resultSet.next()) {
+                    tuote = new Tuote(resultSet.getLong("id"),
+                            resultSet.getLong("list_id"),
+                            resultSet.getString("name"));
+                }
+            }
+            yhteys.close();
+            return tuote;
+        }
+
+        public void poistaTuote(long id) throws SQLException {
+            Connection yhteys = luoYhteys();
+            PreparedStatement prepareStatement = yhteys.prepareStatement("DELETE FROM items WHERE id = ?");
+            prepareStatement.setLong(1, id);
+            prepareStatement.executeUpdate();
+            yhteys.close();
+        }
+
     }
 
     private final long id;
@@ -72,11 +97,26 @@ public class Tuote {
     }
 
     public void poista() {
-        // Poista
+        try {
+            TuoteKysely kysely = new TuoteKysely();
+            kysely.poistaTuote(id);
+        } catch (SQLException ex) {
+            Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static Tuote haeTuote(long id) {
-        return new Tuote(id, 1, "esimerkki tuote");
+        try {
+            TuoteKysely kysely = new TuoteKysely();
+            return kysely.haeTuote(id);
+        } catch (SQLException ex) {
+            Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public static ArrayList<Tuote> listanTuotteet(Ostoslista lista) {
