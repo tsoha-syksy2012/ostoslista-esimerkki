@@ -38,6 +38,15 @@ public class Tuote {
             return tuotteet;
         }
 
+        public void luoTuote(long listaId, String nimi) throws SQLException {
+            Connection yhteys = luoYhteys();
+            PreparedStatement prepareStatement = yhteys.prepareStatement("INSERT INTO items (list_id, name) VALUES (?, ?)");
+            prepareStatement.setLong(1, listaId);
+            prepareStatement.setString(2, nimi);
+            prepareStatement.executeUpdate();
+            yhteys.close();
+        }
+
     }
 
     private final long id;
@@ -84,6 +93,14 @@ public class Tuote {
 
     public static void luoUusi(Ostoslista lista, String nimi) {
         //TODO: Luo uusi
+        try {
+            TuoteKysely kysely = new TuoteKysely();
+            kysely.luoTuote(lista.getId(), nimi);
+        } catch (SQLException ex) {
+            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
