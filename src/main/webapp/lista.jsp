@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="yla.jspf" %>
 <h2>${lista.nimi}</h2>
@@ -19,8 +20,8 @@
         <legend>Uusi tuote listaan</legend>
         <label for="tuote">Tuotteen nimi:</label>
         <input id="tuote" name="tuote" type="text" />
-        <input type="submit" value="Lis‰‰ tuote" />
+        <input type="submit" value="Lis√§√§ tuote" />
     </fieldset>
 </form>
-<p><a href="listat">N‰yt‰ kaikki ostoslistat</a></p>
+<p><a href="listat">N√§yt√§ kaikki ostoslistat</a></p>
 <%@include file="ala.jspf" %>

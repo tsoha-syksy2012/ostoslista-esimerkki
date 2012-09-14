@@ -1,3 +1,4 @@
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="fi.cs.helsinki.saada.ostoslista.mallit.Ostoslista"%>
 <%@include file="yla.jspf" %>
 <h2>Muokkaa listaa: ${lista.nimi}</h2>
