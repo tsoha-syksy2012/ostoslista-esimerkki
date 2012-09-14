@@ -43,7 +43,6 @@ public class ListanMuokkaus extends OstoslistaServlet {
             if (lista.onKayttajan(annaKayttaja(request))) {
                 String nimi = request.getParameter("nimi");
                 boolean oletus = request.getParameter("oletus") != null;
-                System.out.println(oletus);
                 if (lista.setNimi(nimi)) {
                     if (oletus && !annaKayttaja(request).setOletusLista(lista)) {
                         request.setAttribute("virheviesti", "Oletuksen asettaminen ei onnistunut");
