@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="yla.jspf" %>
 <h2>${lista.nimi}</h2>
-<p><a href="muokkaalistaa">Muokkaa listaa</a></p>
+<p><a href="muokkaalistaa?lista=${lista.id}">Muokkaa listaa</a></p>
 <c:choose>
     <c:when test="${!tuotteet.isEmpty()}">
         <ul>

@@ -19,7 +19,7 @@ public class Kayttaja {
     }
 
     public Ostoslista getOletusLista() {
-        return Ostoslista.kayttajanOletusLista(getId());
+        return Ostoslista.kayttajanOletusLista(this);
     }
 
     public ArrayList<Ostoslista> getKaikkiListat() {
@@ -39,6 +39,11 @@ public class Kayttaja {
 
     public static Kayttaja haeKayttaja(long id) {
         return new Kayttaja(1);
+    }
+
+    public boolean setOletusLista(Ostoslista lista) {
+        //TODO: luo oletus
+        return true;
     }
 
 }

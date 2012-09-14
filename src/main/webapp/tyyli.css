@@ -17,4 +17,5 @@ footer p {
 
 p.virhe {
     color: red;
+    font-weight: bold;
 }
