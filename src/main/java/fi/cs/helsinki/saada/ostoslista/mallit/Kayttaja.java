@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 
 /**
@@ -57,9 +59,16 @@ public class Kayttaja {
         return listat;
     }
 
-    public static Kayttaja kirjauduSisaan(String tunnus, String salasana) throws NamingException, SQLException {
-        KayttajaKysely kysely = new KayttajaKysely();
-        return kysely.haeKayttaja(tunnus, salasana);
+    public static Kayttaja kirjauduSisaan(String tunnus, String salasana) {
+        try {
+            KayttajaKysely kysely = new KayttajaKysely();
+            return kysely.haeKayttaja(tunnus, salasana);
+        } catch (SQLException ex) {
+            Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public static Kayttaja haeKayttaja(long id) {
