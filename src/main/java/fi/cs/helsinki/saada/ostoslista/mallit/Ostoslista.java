@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -57,7 +59,8 @@ public class Ostoslista {
             return listat;
         }
 
-        private Ostoslista haeLista(long kayttajaId, long id) throws SQLException {Connection yhteys = luoYhteys();
+        private Ostoslista haeLista(long kayttajaId, long id) throws SQLException {
+            Connection yhteys = luoYhteys();
             PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM lists WHERE user_id = ? AND id = ?");
             prepareStatement.setLong(1, kayttajaId);
             prepareStatement.setLong(2, id);
@@ -70,6 +73,25 @@ public class Ostoslista {
                             resultSet.getString("name"),
                             resultSet.getBoolean("is_default"));
                 }
+            }
+            yhteys.close();
+            return lista;
+        }
+
+        public Ostoslista luoLista(long kayttajaId) throws SQLException {
+            Connection yhteys = luoYhteys();
+            PreparedStatement prepareStatement = yhteys.prepareStatement("INSERT INTO lists (user_id, name) VALUES (?, ?) RETURNING id, user_id, name, is_default");
+            prepareStatement.setLong(1, kayttajaId);
+            SimpleDateFormat pvmFormaatti = new SimpleDateFormat("yyyy-MM-dd");
+            String pvm = pvmFormaatti.format(new Date());
+            prepareStatement.setString(2, "Ostoslista (" + pvm + ")");
+            Ostoslista lista = null;
+            ResultSet resultSet = prepareStatement.executeQuery();
+            while (resultSet.next()) {
+                lista = new Ostoslista(resultSet.getLong("id"),
+                        resultSet.getLong("user_id"),
+                        resultSet.getString("name"),
+                        resultSet.getBoolean("is_default"));
             }
             yhteys.close();
             return lista;
@@ -156,6 +178,14 @@ public class Ostoslista {
     }
 
     public static Ostoslista luoUusi(Kayttaja kayttaja) {
-        return new Ostoslista(99, kayttaja.getId(), "uusi lista", false);
+        try {
+            OstoslistaKysely kysely = new OstoslistaKysely();
+            return kysely.luoLista(kayttaja.getId());
+        } catch (SQLException ex) {
+            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
+            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }
