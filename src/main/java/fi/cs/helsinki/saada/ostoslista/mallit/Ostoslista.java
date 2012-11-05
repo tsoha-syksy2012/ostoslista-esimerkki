@@ -110,7 +110,7 @@ public class Ostoslista {
         return null;
     }
 
-    static boolean asetaKayttajanOletusLista(Kayttaja kayttaja, Ostoslista lista) {
+    public static boolean asetaKayttajanOletusLista(Kayttaja kayttaja, Ostoslista lista) {
         try {
             OstoslistaKysely kysely = new OstoslistaKysely();
             return kysely.asetaOletusLista(kayttaja.getId(), lista.getId());

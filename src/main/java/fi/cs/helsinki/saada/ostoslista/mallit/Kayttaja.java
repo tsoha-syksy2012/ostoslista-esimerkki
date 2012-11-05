@@ -1,7 +1,6 @@
 package fi.cs.helsinki.saada.ostoslista.mallit;
 
 import fi.cs.helsinki.saada.ostoslista.mallit.kyselyt.KayttajaKysely;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
