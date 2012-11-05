@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package fi.cs.helsinki.saada.ostoslista.mallit.kyselyt;
 
 import fi.cs.helsinki.saada.ostoslista.mallit.Tuote;
@@ -30,7 +26,7 @@ public class TuoteKysely extends AbstractKysely {
         if (prepareStatement.execute()) {
             ResultSet resultSet = prepareStatement.getResultSet();
             while (resultSet.next()) {
-                tuotteet.add(new Tuote(resultSet.getLong("id"), resultSet.getLong("list_id"), resultSet.getString("name")));
+                tuotteet.add(luoTuote(resultSet));
             }
         }
         yhteys.close();
@@ -53,8 +49,8 @@ public class TuoteKysely extends AbstractKysely {
         Tuote tuote = null;
         if (prepareStatement.execute()) {
             ResultSet resultSet = prepareStatement.getResultSet();
-            while (resultSet.next()) {
-                tuote = new Tuote(resultSet.getLong("id"), resultSet.getLong("list_id"), resultSet.getString("name"));
+            if (resultSet.next()) {
+                tuote = luoTuote(resultSet);
             }
         }
         yhteys.close();
@@ -69,4 +65,7 @@ public class TuoteKysely extends AbstractKysely {
         yhteys.close();
     }
 
+    private Tuote luoTuote(ResultSet resultSet) throws SQLException {
+        return new Tuote(resultSet.getLong("id"), resultSet.getLong("list_id"), resultSet.getString("name"));
+    }
 }

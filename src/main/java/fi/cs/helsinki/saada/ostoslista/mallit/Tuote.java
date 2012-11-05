@@ -1,11 +1,9 @@
 package fi.cs.helsinki.saada.ostoslista.mallit;
 
 import fi.cs.helsinki.saada.ostoslista.mallit.kyselyt.TuoteKysely;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.NamingException;
 
 /**
  *
@@ -39,9 +37,7 @@ public class Tuote {
         try {
             TuoteKysely kysely = new TuoteKysely();
             kysely.poistaTuote(id);
-        } catch (SQLException ex) {
-            Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NamingException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -50,9 +46,7 @@ public class Tuote {
         try {
             TuoteKysely kysely = new TuoteKysely();
             return kysely.haeTuote(id);
-        } catch (SQLException ex) {
-            Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NamingException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -62,24 +56,18 @@ public class Tuote {
         try {
             TuoteKysely kysely = new TuoteKysely();
             return kysely.haeTuotteet(lista.getId());
-        } catch (SQLException ex) {
-            Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NamingException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
     public static void luoUusi(Ostoslista lista, String nimi) {
-        //TODO: Luo uusi
         try {
             TuoteKysely kysely = new TuoteKysely();
             kysely.luoTuote(lista.getId(), nimi);
-        } catch (SQLException ex) {
-            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NamingException ex) {
-            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }
