@@ -1,17 +1,16 @@
 package fi.cs.helsinki.saada.ostoslista.mallit;
 
 import fi.cs.helsinki.saada.ostoslista.mallit.kyselyt.OstoslistaKysely;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.NamingException;
 
 /**
  *
  * @author stb
  */
 public class Ostoslista {
+
     private final long id;
     private final long kayttajaId;
     private String nimi;
@@ -51,9 +50,7 @@ public class Ostoslista {
                 this.nimi = nimi;
                 return true;
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NamingException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
@@ -67,9 +64,7 @@ public class Ostoslista {
         try {
             OstoslistaKysely kysely = new OstoslistaKysely();
             return kysely.haeOletus(kayttaja.getId());
-        } catch (SQLException ex) {
-            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NamingException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -79,9 +74,7 @@ public class Ostoslista {
         try {
             OstoslistaKysely kysely = new OstoslistaKysely();
             return kysely.haeLista(kayttaja.getId(), id);
-        } catch (SQLException ex) {
-            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NamingException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -91,9 +84,7 @@ public class Ostoslista {
         try {
             OstoslistaKysely kysely = new OstoslistaKysely();
             return kysely.haeLista(id);
-        } catch (SQLException ex) {
-            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NamingException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -103,9 +94,7 @@ public class Ostoslista {
         try {
             OstoslistaKysely kysely = new OstoslistaKysely();
             return kysely.haeListat(kayttaja.getId());
-        } catch (SQLException ex) {
-            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NamingException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -115,9 +104,7 @@ public class Ostoslista {
         try {
             OstoslistaKysely kysely = new OstoslistaKysely();
             return kysely.luoLista(kayttaja.getId());
-        } catch (SQLException ex) {
-            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NamingException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -127,9 +114,7 @@ public class Ostoslista {
         try {
             OstoslistaKysely kysely = new OstoslistaKysely();
             return kysely.asetaOletusLista(kayttaja.getId(), lista.getId());
-        } catch (SQLException ex) {
-            Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NamingException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;

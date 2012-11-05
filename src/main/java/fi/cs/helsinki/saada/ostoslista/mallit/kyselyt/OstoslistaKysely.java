@@ -30,13 +30,7 @@ public class OstoslistaKysely extends AbstractKysely {
         Connection yhteys = luoYhteys();
         PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM lists WHERE user_id = ? AND is_default IS true");
         prepareStatement.setLong(1, kayttajaId);
-        Ostoslista lista = null;
-        if (prepareStatement.execute()) {
-            ResultSet resultSet = prepareStatement.getResultSet();
-            while (resultSet.next()) {
-                lista = new Ostoslista(resultSet.getLong("id"), resultSet.getLong("user_id"), resultSet.getString("name"), resultSet.getBoolean("is_default"));
-            }
-        }
+        Ostoslista lista = suoritaListaHaku(prepareStatement);
         yhteys.close();
         return lista;
     }
@@ -49,7 +43,7 @@ public class OstoslistaKysely extends AbstractKysely {
         if (prepareStatement.execute()) {
             ResultSet resultSet = prepareStatement.getResultSet();
             while (resultSet.next()) {
-                listat.add(new Ostoslista(resultSet.getLong("id"), resultSet.getLong("user_id"), resultSet.getString("name"), resultSet.getBoolean("is_default")));
+                listat.add(luoLista(resultSet));
             }
         }
         yhteys.close();
@@ -84,21 +78,11 @@ public class OstoslistaKysely extends AbstractKysely {
         prepareStatement.setString(2, "Ostoslista (" + pvm + ")");
         Ostoslista lista = null;
         ResultSet resultSet = prepareStatement.executeQuery();
-        while (resultSet.next()) {
-            lista = new Ostoslista(resultSet.getLong("id"), resultSet.getLong("user_id"), resultSet.getString("name"), resultSet.getBoolean("is_default"));
+        if (resultSet.next()) {
+            lista = luoLista(resultSet);
         }
         yhteys.close();
         return lista;
-    }
-
-    private Ostoslista suoritaListaHaku(PreparedStatement prepareStatement) throws SQLException {
-        if (prepareStatement.execute()) {
-            ResultSet resultSet = prepareStatement.getResultSet();
-            while (resultSet.next()) {
-                return new Ostoslista(resultSet.getLong("id"), resultSet.getLong("user_id"), resultSet.getString("name"), resultSet.getBoolean("is_default"));
-            }
-        }
-        return null;
     }
 
     public boolean muutaNimea(long id, String nimi) throws SQLException {
@@ -106,7 +90,7 @@ public class OstoslistaKysely extends AbstractKysely {
         PreparedStatement prepareStatement = yhteys.prepareStatement("UPDATE lists SET name = ? WHERE id = ?");
         prepareStatement.setString(1, nimi);
         prepareStatement.setLong(2, id);
-        boolean onnistuiko = prepareStatement.executeUpdate() > 0;
+        boolean onnistuiko = muutosMuuttiRiveja(prepareStatement);
         yhteys.close();
         return onnistuiko;
     }
@@ -120,7 +104,7 @@ public class OstoslistaKysely extends AbstractKysely {
             PreparedStatement asetetaanUusiOletus = yhteys.prepareStatement("UPDATE lists SET is_default = true WHERE id = ?");
             poistetaanOletukset.setLong(1, kayttajaId);
             asetetaanUusiOletus.setLong(1, listaId);
-            onnistuiko = poistetaanOletukset.executeUpdate() > 0 && asetetaanUusiOletus.executeUpdate() > 0;
+            onnistuiko = muutosMuuttiRiveja(poistetaanOletukset) && muutosMuuttiRiveja(asetetaanUusiOletus);
             yhteys.commit();
         } catch (SQLException ex) {
             Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
@@ -132,4 +116,21 @@ public class OstoslistaKysely extends AbstractKysely {
         }
     }
 
+    private Ostoslista suoritaListaHaku(PreparedStatement prepareStatement) throws SQLException {
+        if (prepareStatement.execute()) {
+            ResultSet resultSet = prepareStatement.getResultSet();
+            if (resultSet.next()) {
+                return luoLista(resultSet);
+            }
+        }
+        return null;
+    }
+
+    private boolean muutosMuuttiRiveja(PreparedStatement prepareStatement) throws SQLException {
+        return prepareStatement.executeUpdate() > 0;
+    }
+
+    private Ostoslista luoLista(ResultSet resultSet) throws SQLException {
+        return new Ostoslista(resultSet.getLong("id"), resultSet.getLong("user_id"), resultSet.getString("name"), resultSet.getBoolean("is_default"));
+    }
 }
