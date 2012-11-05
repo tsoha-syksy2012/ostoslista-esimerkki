@@ -1,8 +1,6 @@
 package fi.cs.helsinki.saada.ostoslista.mallit;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import fi.cs.helsinki.saada.ostoslista.mallit.kyselyt.KayttajaKysely;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -14,29 +12,6 @@ import javax.naming.NamingException;
  * @author stb
  */
 public class Kayttaja {
-
-    private static class KayttajaKysely extends AbstractKysely {
-
-        public KayttajaKysely() throws NamingException {
-            super();
-        }
-
-        public Kayttaja haeKayttaja(String tunnus, String salasana) throws SQLException {
-            Connection yhteys = luoYhteys();
-            PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM users WHERE username = ? AND password = ?");
-            prepareStatement.setString(1, tunnus);
-            prepareStatement.setString(2, salasana);
-            Kayttaja kayttaja = null;
-            if (prepareStatement.execute()) {
-                ResultSet resultSet = prepareStatement.getResultSet();
-                while (resultSet.next()) {
-                    kayttaja = new Kayttaja(resultSet.getLong("id"));
-                }
-            }
-            yhteys.close();
-            return kayttaja;
-        }
-    }
     private long id;
 
     public Kayttaja(long id) {

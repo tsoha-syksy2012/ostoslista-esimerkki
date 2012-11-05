@@ -1,4 +1,4 @@
-package fi.cs.helsinki.saada.ostoslista.mallit;
+package fi.cs.helsinki.saada.ostoslista.mallit.kyselyt;
 
 import java.sql.Connection;
 import java.sql.SQLException;
