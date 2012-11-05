@@ -5,13 +5,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.NamingException;
 
 /**
  *
  * @author stb
  */
 public class Kayttaja {
+
     private long id;
 
     public Kayttaja(long id) {
@@ -38,16 +38,19 @@ public class Kayttaja {
         try {
             KayttajaKysely kysely = new KayttajaKysely();
             return kysely.haeKayttaja(tunnus, salasana);
-        } catch (SQLException ex) {
-            Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NamingException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
     public static Kayttaja haeKayttaja(long id) {
-        return new Kayttaja(1);
+        try {
+            KayttajaKysely kysely = new KayttajaKysely();
+            return kysely.haeKayttaja(id);
+        } catch (Exception ex) {
+            Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
-
 }
