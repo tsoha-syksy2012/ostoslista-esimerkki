@@ -1,4 +1,4 @@
-package fi.cs.helsinki.saada.ostoslista.mallit.kyselyt;
+package fi.cs.helsinki.saada.ostoslista.varastot;
 
 import fi.cs.helsinki.saada.ostoslista.mallit.Kayttaja;
 import java.sql.Connection;
@@ -11,9 +11,9 @@ import javax.naming.NamingException;
  *
  * @author stb
  */
-public class KayttajaKysely extends AbstractKysely {
+public class KayttajaVarasto extends AbstractVarasto {
 
-    public KayttajaKysely() throws NamingException {
+    public KayttajaVarasto() throws NamingException {
         super();
     }
 

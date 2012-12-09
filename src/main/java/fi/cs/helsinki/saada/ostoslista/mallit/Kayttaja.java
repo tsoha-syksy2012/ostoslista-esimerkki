@@ -1,6 +1,6 @@
 package fi.cs.helsinki.saada.ostoslista.mallit;
 
-import fi.cs.helsinki.saada.ostoslista.mallit.kyselyt.KayttajaKysely;
+import fi.cs.helsinki.saada.ostoslista.varastot.KayttajaVarasto;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,7 +74,7 @@ public class Kayttaja {
      */
     public static Kayttaja kirjauduSisaan(String tunnus, String salasana) {
         try {
-            KayttajaKysely kysely = new KayttajaKysely();
+            KayttajaVarasto kysely = new KayttajaVarasto();
             return kysely.haeKayttaja(tunnus, salasana);
         } catch (Exception ex) {
             Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
@@ -89,7 +89,7 @@ public class Kayttaja {
      */
     public static Kayttaja haeKayttaja(long id) {
         try {
-            KayttajaKysely kysely = new KayttajaKysely();
+            KayttajaVarasto kysely = new KayttajaVarasto();
             return kysely.haeKayttaja(id);
         } catch (Exception ex) {
             Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);

@@ -1,6 +1,6 @@
 package fi.cs.helsinki.saada.ostoslista.mallit;
 
-import fi.cs.helsinki.saada.ostoslista.mallit.kyselyt.TuoteKysely;
+import fi.cs.helsinki.saada.ostoslista.varastot.TuoteVarasto;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,7 +74,7 @@ public class Tuote {
      */
     public void poista() {
         try {
-            TuoteKysely kysely = new TuoteKysely();
+            TuoteVarasto kysely = new TuoteVarasto();
             kysely.poistaTuote(id);
         } catch (Exception ex) {
             Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);
@@ -89,7 +89,7 @@ public class Tuote {
      */
     public static Tuote haeTuote(long id) {
         try {
-            TuoteKysely kysely = new TuoteKysely();
+            TuoteVarasto kysely = new TuoteVarasto();
             return kysely.haeTuote(id);
         } catch (Exception ex) {
             Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);
@@ -105,7 +105,7 @@ public class Tuote {
      */
     public static ArrayList<Tuote> listanTuotteet(Ostoslista lista) {
         try {
-            TuoteKysely kysely = new TuoteKysely();
+            TuoteVarasto kysely = new TuoteVarasto();
             return kysely.haeTuotteet(lista.getId());
         } catch (Exception ex) {
             Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);
@@ -121,7 +121,7 @@ public class Tuote {
      */
     public static void luoUusi(Ostoslista lista, String nimi) {
         try {
-            TuoteKysely kysely = new TuoteKysely();
+            TuoteVarasto kysely = new TuoteVarasto();
             kysely.luoTuote(lista.getId(), nimi);
         } catch (Exception ex) {
             Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);

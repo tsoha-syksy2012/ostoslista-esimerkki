@@ -1,6 +1,6 @@
 package fi.cs.helsinki.saada.ostoslista.mallit;
 
-import fi.cs.helsinki.saada.ostoslista.mallit.kyselyt.OstoslistaKysely;
+import fi.cs.helsinki.saada.ostoslista.varastot.OstoslistaVarasto;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -103,7 +103,7 @@ public class Ostoslista {
      */
     public boolean setNimi(String nimi) {
         try {
-            OstoslistaKysely kysely = new OstoslistaKysely();
+            OstoslistaVarasto kysely = new OstoslistaVarasto();
             if (kysely.muutaNimea(getId(), nimi)) {
                 this.nimi = nimi;
                 return true;
@@ -131,7 +131,7 @@ public class Ostoslista {
      */
     public static Ostoslista kayttajanOletusLista(Kayttaja kayttaja) {
         try {
-            OstoslistaKysely kysely = new OstoslistaKysely();
+            OstoslistaVarasto kysely = new OstoslistaVarasto();
             return kysely.haeOletus(kayttaja.getId());
         } catch (Exception ex) {
             Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
@@ -148,7 +148,7 @@ public class Ostoslista {
      */
     public static Ostoslista haeLista(Kayttaja kayttaja, long id) {
         try {
-            OstoslistaKysely kysely = new OstoslistaKysely();
+            OstoslistaVarasto kysely = new OstoslistaVarasto();
             return kysely.haeLista(kayttaja.getId(), id);
         } catch (Exception ex) {
             Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
@@ -164,7 +164,7 @@ public class Ostoslista {
      */
     public static Ostoslista haeLista(long id) {
         try {
-            OstoslistaKysely kysely = new OstoslistaKysely();
+            OstoslistaVarasto kysely = new OstoslistaVarasto();
             return kysely.haeLista(id);
         } catch (Exception ex) {
             Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
@@ -180,7 +180,7 @@ public class Ostoslista {
      */
     public static ArrayList<Ostoslista> kayttajanListat(Kayttaja kayttaja) {
         try {
-            OstoslistaKysely kysely = new OstoslistaKysely();
+            OstoslistaVarasto kysely = new OstoslistaVarasto();
             return kysely.haeListat(kayttaja.getId());
         } catch (Exception ex) {
             Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
@@ -196,7 +196,7 @@ public class Ostoslista {
      */
     public static Ostoslista luoUusi(Kayttaja kayttaja) {
         try {
-            OstoslistaKysely kysely = new OstoslistaKysely();
+            OstoslistaVarasto kysely = new OstoslistaVarasto();
             return kysely.luoLista(kayttaja.getId());
         } catch (Exception ex) {
             Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);
@@ -213,7 +213,7 @@ public class Ostoslista {
      */
     public static boolean asetaKayttajanOletusLista(Kayttaja kayttaja, Ostoslista lista) {
         try {
-            OstoslistaKysely kysely = new OstoslistaKysely();
+            OstoslistaVarasto kysely = new OstoslistaVarasto();
             return kysely.asetaOletusLista(kayttaja.getId(), lista.getId());
         } catch (Exception ex) {
             Logger.getLogger(Ostoslista.class.getName()).log(Level.SEVERE, null, ex);

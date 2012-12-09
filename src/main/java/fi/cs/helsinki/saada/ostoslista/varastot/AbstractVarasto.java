@@ -1,4 +1,4 @@
-package fi.cs.helsinki.saada.ostoslista.mallit.kyselyt;
+package fi.cs.helsinki.saada.ostoslista.varastot;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -11,11 +11,11 @@ import javax.sql.DataSource;
  *
  * @author stb
  */
-public class AbstractKysely {
+public class AbstractVarasto {
 
     private DataSource dataSource;
 
-    public AbstractKysely() throws NamingException {
+    public AbstractVarasto() throws NamingException {
         Context initCtx = new InitialContext();
         Context envCtx = (Context) initCtx.lookup("java:comp/env");
         this.dataSource = (DataSource) envCtx.lookup("jdbc/ostoslista");
