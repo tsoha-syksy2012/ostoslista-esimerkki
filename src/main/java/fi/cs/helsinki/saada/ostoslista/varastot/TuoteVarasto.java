@@ -1,5 +1,6 @@
 package fi.cs.helsinki.saada.ostoslista.varastot;
 
+import fi.cs.helsinki.saada.ostoslista.mallit.Kayttaja;
 import fi.cs.helsinki.saada.ostoslista.mallit.Tuote;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,7 +43,7 @@ public class TuoteVarasto extends AbstractVarasto {
         yhteys.close();
     }
 
-    public Tuote haeTuote(long id) throws SQLException {
+    public Tuote haeTuote(long id) throws Exception {
         Connection yhteys = luoYhteys();
         PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM items WHERE id = ?");
         prepareStatement.setLong(1, id);
@@ -54,13 +55,16 @@ public class TuoteVarasto extends AbstractVarasto {
             }
         }
         yhteys.close();
+        if (tuote == null) {
+            throw new Exception();
+        }
         return tuote;
     }
 
-    public void poistaTuote(long id) throws SQLException {
+    public void poistaTuote(Tuote tuote) throws SQLException {
         Connection yhteys = luoYhteys();
         PreparedStatement prepareStatement = yhteys.prepareStatement("DELETE FROM items WHERE id = ?");
-        prepareStatement.setLong(1, id);
+        prepareStatement.setLong(1, tuote.getId());
         prepareStatement.executeUpdate();
         yhteys.close();
     }

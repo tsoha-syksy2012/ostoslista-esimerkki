@@ -70,18 +70,6 @@ public class Tuote {
     }
 
     /**
-     * Poistaa tuotteen
-     */
-    public void poista() {
-        try {
-            TuoteVarasto kysely = new TuoteVarasto();
-            kysely.poistaTuote(id);
-        } catch (Exception ex) {
-            Logger.getLogger(Tuote.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    /**
      * Hakee tuotteen annetun tunnuksen perusteella
      *
      * @param id Annettu tunnus
