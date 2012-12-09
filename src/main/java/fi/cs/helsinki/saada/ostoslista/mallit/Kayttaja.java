@@ -1,9 +1,6 @@
 package fi.cs.helsinki.saada.ostoslista.mallit;
 
-import fi.cs.helsinki.saada.ostoslista.varastot.KayttajaVarasto;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Käyttäjä-malli
@@ -65,35 +62,4 @@ public class Kayttaja {
         return Ostoslista.kayttajanListat(this);
     }
 
-    /**
-     * Tarkistaa löytyykö tunnusta ja salasanaa vastaavaa käyttäjää
-     *
-     * @param tunnus Kirjautuvan käyttäjän tunnus
-     * @param salasana Kirjautuvan käyttäjän salasana
-     * @return Kirjautuvan käyttäjän, jos tunnus ja salasana täsmäsivät
-     */
-    public static Kayttaja kirjauduSisaan(String tunnus, String salasana) {
-        try {
-            KayttajaVarasto kysely = new KayttajaVarasto();
-            return kysely.haeKayttaja(tunnus, salasana);
-        } catch (Exception ex) {
-            Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
-    /**
-     * Hakee id:tä vastaavan käyttäjän
-     * @param id Käyttäjän yksilöivä id
-     * @return Käyttäjä
-     */
-    public static Kayttaja haeKayttaja(long id) {
-        try {
-            KayttajaVarasto kysely = new KayttajaVarasto();
-            return kysely.haeKayttaja(id);
-        } catch (Exception ex) {
-            Logger.getLogger(Kayttaja.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
 }

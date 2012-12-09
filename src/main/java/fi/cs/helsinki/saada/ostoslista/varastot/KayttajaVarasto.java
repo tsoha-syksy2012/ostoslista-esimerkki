@@ -4,7 +4,6 @@ import fi.cs.helsinki.saada.ostoslista.mallit.Kayttaja;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.naming.NamingException;
 
 /**
@@ -17,7 +16,7 @@ public class KayttajaVarasto extends AbstractVarasto {
         super();
     }
 
-    public Kayttaja haeKayttaja(String tunnus, String salasana) throws SQLException {
+    public Kayttaja haeKayttaja(String tunnus, String salasana) throws Exception {
         Connection yhteys = luoYhteys();
         PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM users WHERE username = ? AND password = ?");
         prepareStatement.setString(1, tunnus);
@@ -25,14 +24,14 @@ public class KayttajaVarasto extends AbstractVarasto {
         return haeKayttaja(prepareStatement, yhteys);
     }
 
-    public Kayttaja haeKayttaja(long id) throws SQLException {
+    public Kayttaja haeKayttaja(long id) throws Exception {
         Connection yhteys = luoYhteys();
         PreparedStatement prepareStatement = yhteys.prepareStatement("SELECT * FROM users WHERE id = ?");
         prepareStatement.setLong(1, id);
         return haeKayttaja(prepareStatement, yhteys);
     }
 
-    private Kayttaja haeKayttaja(PreparedStatement prepareStatement, Connection yhteys) throws SQLException {
+    private Kayttaja haeKayttaja(PreparedStatement prepareStatement, Connection yhteys) throws Exception {
         Kayttaja kayttaja = null;
         if (prepareStatement.execute()) {
             ResultSet resultSet = prepareStatement.getResultSet();
@@ -41,6 +40,9 @@ public class KayttajaVarasto extends AbstractVarasto {
             }
         }
         yhteys.close();
+        if (kayttaja == null) {
+            throw new Exception();
+        }
         return kayttaja;
     }
 

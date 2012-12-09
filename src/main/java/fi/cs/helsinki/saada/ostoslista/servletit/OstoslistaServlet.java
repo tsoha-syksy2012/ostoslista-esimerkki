@@ -1,7 +1,10 @@
 package fi.cs.helsinki.saada.ostoslista.servletit;
 
 import fi.cs.helsinki.saada.ostoslista.mallit.Kayttaja;
+import fi.cs.helsinki.saada.ostoslista.tyokalut.Kirjautuja;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,13 +21,11 @@ class OstoslistaServlet extends HttpServlet {
     protected boolean varmistaKirjautuminen(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         HttpSession session = request.getSession(true);
-        Object kayttajaId = session.getAttribute(kayttajaSessioAvain());
-        if (kayttajaId != null) {
-            Kayttaja kayttaja = Kayttaja.haeKayttaja((Long) kayttajaId);
-            if (kayttaja != null) {
-                request.setAttribute("kayttaja", kayttaja);
-                return true;
-            }
+        try {
+            request.setAttribute("kayttaja", Kirjautuja.getKirjautunutKayttaja(session));
+            return true;
+        } catch (Exception ex) {
+            Logger.getLogger(OstoslistaServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         ohjaaSivulle("kirjautuminen", response);
         return false;
@@ -59,5 +60,4 @@ class OstoslistaServlet extends HttpServlet {
     protected void annaVirhe(HttpServletResponse response) throws IOException {
         response.sendError(HttpServletResponse.SC_NOT_FOUND);
     }
-
 }
