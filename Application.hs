@@ -18,9 +18,11 @@ import Network.HTTP.Conduit (newManager, def)
 import Control.Monad.Logger (runLoggingT)
 import System.IO (stdout)
 import System.Log.FastLogger (mkLogger)
-import qualified Web.Heroku
 import qualified Data.Aeson.Types as AT
 import qualified Data.HashMap.Strict as M
+#ifndef DEVELOPMENT
+import qualified Web.Heroku
+#endif
 
 -- Import all relevant handler modules here.
 -- Don't forget to add new modules to your cabal file!
@@ -83,6 +85,15 @@ getApplicationDev =
         }
 
 
+#ifndef DEVELOPMENT
+canonicalizeKey :: (Text, val) -> (Text, val)
+canonicalizeKey ("dbname", val) = ("database", val)
+canonicalizeKey pair = pair
+
+toMapping :: [(Text, Text)] -> AT.Value
+toMapping xs = AT.Object $ M.fromList $ map (\(key, val) -> (key, AT.String val)) xs
+#endif
+
 combineMappings :: AT.Value -> AT.Value -> AT.Value
 combineMappings (AT.Object m1) (AT.Object m2) = AT.Object $ m1 `M.union` m2
 combineMappings _ _ = error "Data.Object is not a Mapping."
@@ -93,13 +104,4 @@ loadHerokuConfig = do
   return $ AT.Object M.empty
 #else
   Web.Heroku.dbConnParams >>= return . toMapping . map canonicalizeKey
-#endif
-
-#ifndef DEVELOPMENT
-canonicalizeKey :: (Text, val) -> (Text, val)
-canonicalizeKey ("dbname", val) = ("database", val)
-canonicalizeKey pair = pair
-
-toMapping :: [(Text, Text)] -> AT.Value
-toMapping xs = AT.Object $ M.fromList $ map (\(key, val) -> (key, AT.String val)) xs
 #endif
