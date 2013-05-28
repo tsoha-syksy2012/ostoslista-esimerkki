@@ -19,7 +19,6 @@ import Control.Monad.Logger (runLoggingT)
 import System.IO (stdout)
 import System.Log.FastLogger (mkLogger)
 import qualified Web.Heroku
-import System.Environment (getEnv)
 import qualified Data.Aeson.Types as AT
 import qualified Data.HashMap.Strict as M
 
@@ -88,15 +87,12 @@ combineMappings :: AT.Value -> AT.Value -> AT.Value
 combineMappings (AT.Object m1) (AT.Object m2) = AT.Object $ m1 `M.union` m2
 combineMappings _ _ = error "Data.Object is not a Mapping."
 
-dbConnParams :: IO [(Text, Text)]
-dbConnParams = getEnv "HEROKU_POSTGRESQL_AMBER_URL" >>= return . Web.Heroku.parseDatabaseUrl
-
 loadHerokuConfig :: IO AT.Value
 loadHerokuConfig = do
 #ifdef DEVELOPMENT
   return $ AT.Object M.empty
 #else
-  dbConnParams >>= return . toMapping . map canonicalizeKey
+  Web.Heroku.dbConnParams >>= return . toMapping . map canonicalizeKey
 #endif
 
 #ifndef DEVELOPMENT
