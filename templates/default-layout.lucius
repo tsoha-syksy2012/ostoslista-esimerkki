@@ -1,0 +1,16 @@
+body {
+  background-color: #cdffff;
+  color: #400d12;
+}
+
+a {
+  color: #f00;
+}
+
+a:hover {
+  color: #4fd5d6;
+}
+
+footer p {
+  text-align: center;
+}
