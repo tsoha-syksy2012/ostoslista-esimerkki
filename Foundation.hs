@@ -4,8 +4,7 @@ import Prelude
 import Yesod
 import Yesod.Static
 import Yesod.Auth
-import Yesod.Auth.BrowserId
-import Yesod.Auth.GoogleEmail
+import Yesod.Auth.HashDB (authHashDB, getAuthIdHashDB)
 import Yesod.Default.Config
 import Yesod.Default.Util (addStaticContentExternal)
 import Network.HTTP.Conduit (Manager)
@@ -95,6 +94,14 @@ instance Yesod App where
         Just $ uncurry (joinPath y (Settings.staticRoot $ settings y)) $ renderRoute s
     urlRenderOverride _ _ = Nothing
 
+    isAuthorized (AuthR _) _ = return Authorized
+    isAuthorized _ _ = do
+      mu <- maybeAuthId
+      return $ case mu of
+        Nothing -> AuthenticationRequired
+        Just _ -> Authorized
+
+
     -- The page to be redirected to when authentication is required.
     authRoute _ = Just $ AuthR LoginR
 
@@ -134,19 +141,13 @@ instance YesodAuth App where
     type AuthId App = UserId
 
     -- Where to send a user after successful login
-    loginDest _ = HomeR
+    loginDest _ = RootR
     -- Where to send a user after logout
-    logoutDest _ = HomeR
+    logoutDest _ = RootR
 
-    getAuthId creds = runDB $ do
-        x <- getBy $ UniqueUser $ credsIdent creds
-        case x of
-            Just (Entity uid _) -> return $ Just uid
-            Nothing -> do
-                fmap Just $ insert $ User (credsIdent creds) Nothing
+    getAuthId creds = getAuthIdHashDB AuthR (Just . UniqueUsername) creds
 
-    -- You can add other plugins like BrowserID, email or OAuth here
-    authPlugins _ = [authBrowserId, authGoogleEmail]
+    authPlugins _ = [authHashDB (Just . UniqueUsername)]
 
     authHttpManager = httpManager
 

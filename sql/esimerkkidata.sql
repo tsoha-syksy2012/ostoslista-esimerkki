@@ -1,6 +1,6 @@
-INSERT INTO users (username, password) VALUES
-  ('tester', 'password123'),
-  ('lester', 'password321');
+INSERT INTO users (username, password, salt) VALUES
+  ('tester', 'ca74ec8f894b777b36a6f5ffbf54f7f6c1ae352f', 'salt'),
+  ('lester', '16beb62262cc9000f6a6e61e275991563a2ea6d7', 'salt');
 
 INSERT INTO lists (user_id, name, is_default) VALUES
   ((SELECT id FROM users WHERE username = 'tester'), 'Kauppaan', true),

@@ -1,8 +1,10 @@
 -- Käyttäjä-taulun luonti
 CREATE TABLE users (
   id serial PRIMARY KEY,
-  username varchar UNIQUE,
-  password varchar
+  username varchar NOT NULL,
+  password varchar NOT NULL,
+  salt varchar NOT NULL,
+  CONSTRAINT unique_username UNIQUE (username)
 );
 
 -- Ostoslista-taulun luonti
