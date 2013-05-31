@@ -130,6 +130,15 @@ instance YesodPersist App where
             f
             (connPool master)
 
+loginWidget :: (Route Auth -> Route m) -> GWidget sub m ()
+loginWidget tm = do
+    setTitle "Kirjautuminen"
+    $(widgetFile "login")
+  where login = PluginR "hashdb" ["login"] :: AuthRoute
+
+customAuthHashDB :: AuthPlugin m -> AuthPlugin m
+customAuthHashDB (AuthPlugin name dispatch _) = AuthPlugin name dispatch loginWidget
+
 instance YesodAuth App where
     type AuthId App = UserId
 
@@ -140,7 +149,7 @@ instance YesodAuth App where
 
     getAuthId creds = getAuthIdHashDB AuthR (Just . UniqueUsername) creds
 
-    authPlugins _ = [authHashDB (Just . UniqueUsername)]
+    authPlugins _ = [customAuthHashDB $ authHashDB (Just . UniqueUsername)]
 
     authHttpManager = httpManager
 
