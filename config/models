@@ -3,3 +3,12 @@ User sql=users
     password Text
     salt     Text
     UniqueUsername username
+
+List sql=lists
+    userId UserId
+    name Text
+    isDefault Bool default=false
+
+Item sql=items
+    listId ListId
+    name Text
