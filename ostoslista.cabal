@@ -21,6 +21,8 @@ library
                      Settings.Development
                      Handler.Home
                      Handler.Root
+                     Handler.List
+                     Handler.Lists
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

@@ -1,7 +1,13 @@
-module Handler.Root where
+module Handler.Root (
+  getRootR
+) where
 
 import Import
+import Yesod.Auth (requireAuthId)
 
 getRootR :: Handler ()
 getRootR = do
-  redirect HomeR
+  userId <- requireAuthId
+  lists <- runDB $ selectList [ListUserId ==. userId, ListIsDefault ==. True] []
+  let ((Entity lid _):_) = lists
+  redirect $ ListR lid

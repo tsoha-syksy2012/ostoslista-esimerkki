@@ -6,3 +6,5 @@
 / RootR GET
 
 /home HomeR GET POST
+/lista/#ListId ListR GET
+/listat ListsR GET
