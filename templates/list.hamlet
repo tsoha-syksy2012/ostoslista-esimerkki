@@ -1,0 +1,21 @@
+<h2>#{listName list}
+<p>
+  <a href="">Muokkaa listaa
+
+$if null items
+  <p>Ei tuotteita listalla
+$else
+  <ul>
+    $forall Entity itemId item <- items
+      <li>
+        #{itemName item}
+        <a href="">[poista]
+
+<form action="" method="POST">
+  <fieldset>
+    <legend>Uusi tuote listaan
+    <label for="tuote">Tuotteen nimi:
+    <input id="tuote" name="tuote" type="text">
+    <input type="submit" value="Lisää tuote">
+<p>
+  <a href=@{ListsR}>Näytä kaikki ostoslistat

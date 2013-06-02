@@ -3,7 +3,6 @@ module Handler.Root (
 ) where
 
 import Import
-import Yesod.Auth (requireAuthId)
 
 getRootR :: Handler ()
 getRootR = do

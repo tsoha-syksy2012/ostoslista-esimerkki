@@ -1,0 +1,11 @@
+<h2>Kaikki ostoslistat
+<ul>
+  $forall Entity listId list <- lists
+    <li>
+      <a href=@{ListR listId}>#{listName list}
+      $if listIsDefault list
+        (oletus)
+
+<form action="/uusilista" method="POST">
+  <p>
+    <input type="submit" value="Luo uusi lista">
