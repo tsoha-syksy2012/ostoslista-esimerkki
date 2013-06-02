@@ -1,6 +1,6 @@
 <h2>#{listName list}
 <p>
-  <a href="">Muokkaa listaa
+  <a href=@{EditListR listId}>Muokkaa listaa
 
 $if null items
   <p>Ei tuotteita listalla

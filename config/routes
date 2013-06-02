@@ -8,5 +8,7 @@
 /lista/#ListId ListR GET
 /listat ListsR GET
 /uusilista NewListR POST
+/muokkaalistaa/#ListId EditListR GET POST
+
 /lisaalistalle/#ListId AddToListR POST
 /poistalistalta/#ItemId RemoveFromListR GET

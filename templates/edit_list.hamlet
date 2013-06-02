@@ -1,0 +1,15 @@
+<h2>Moukkaa listaa: #{listName list}
+<p>
+  <a href=@{ListR listId}>Takaisin listaan
+
+<form action=@{EditListR listId} method="POST">
+  <fieldset>
+    <legend>Listan tietojen muokkaus
+    <label for="nimi">Listan nimi:
+    <input id="nimi" name="nimi" type="text" value="#{listName list}">
+    <label for="oletus">Onko ensisijainen?
+    $if listIsDefault list
+      <input type="checkbox" id="oletus" name="oletus" checked="checked">
+    $else
+      <input type="checkbox" id="oletus" name="oletus">
+    <input type="submit" value="Tallenna listan muutokset">
