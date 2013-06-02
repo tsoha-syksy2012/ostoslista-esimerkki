@@ -9,3 +9,4 @@
 /listat ListsR GET
 /uusilista NewListR POST
 /lisaalistalle/#ListId AddToListR POST
+/poistalistalta/#ItemId RemoveFromListR GET
