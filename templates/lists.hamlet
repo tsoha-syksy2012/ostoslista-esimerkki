@@ -6,6 +6,6 @@
       $if listIsDefault list
         (oletus)
 
-<form action="/uusilista" method="POST">
+<form action=@{NewListR} method="POST">
   <p>
     <input type="submit" value="Luo uusi lista">

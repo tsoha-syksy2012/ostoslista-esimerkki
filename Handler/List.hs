@@ -1,4 +1,8 @@
-module Handler.List where
+module Handler.List (
+  getListR,
+  getListsR,
+  postNewListR
+) where
 
 import Import
 
@@ -18,3 +22,9 @@ getListsR = do
   defaultLayout $ do
     setTitle "Kaikki ostoslistat"
     $(widgetFile "lists")
+
+postNewListR :: Handler ()
+postNewListR = do
+  userId <- requireAuthId
+  listId <- runDB $ insert $ List userId "Uusi lista" False
+  redirect $ ListR listId
