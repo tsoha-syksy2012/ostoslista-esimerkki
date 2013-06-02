@@ -8,3 +8,4 @@
 /lista/#ListId ListR GET
 /listat ListsR GET
 /uusilista NewListR POST
+/lisaalistalle/#ListId AddToListR POST

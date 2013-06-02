@@ -11,7 +11,7 @@ $else
         #{itemName item}
         <a href="">[poista]
 
-<form action="" method="POST">
+<form action=@{AddToListR listId} method="POST">
   <fieldset>
     <legend>Uusi tuote listaan
     <label for="tuote">Tuotteen nimi:
